@@ -1,7 +1,5 @@
 # BSP meta-layer for Intel (ALTERA) SoC-FPGAS (SoCFPGAs) and the Yocto Project 
 
-**This is a further development of  [`kraj/meta-altera`](https://github.com/kraj/meta-altera), the official OpenEmbedded/Yocto BSP layer for Altera SoCFPGA platforms.**
-
 **With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs* is added to the Yocto Project.**
 
 Usually the Yocto project can generate all required components (rootfs, device tree, bootloaders,...) to boot up a final embedded Linux. But this is not compatible with [Intel's Boot flow](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/an/an709.pdf).
