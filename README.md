@@ -1,4 +1,4 @@
-# BSP-meta layer for Intel SoC-FPGAS (SoCFPGAs) and the Yocto Project 
+# BSP meta-layer for Intel (ALTERA) SoC-FPGAS (SoCFPGAs) and the Yocto Project 
 
 **This is a further development of  [`kraj/meta-altera`](https://github.com/kraj/meta-altera), the official OpenEmbedded/Yocto BSP layer for Altera SoCFPGA platforms.**
 
