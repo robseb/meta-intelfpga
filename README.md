@@ -140,7 +140,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bibtabe
 		bitbake --show-versions | grep linux  
 		````
-6. Step: **Optimal: Change the Linux Kernel configuration**
+6. Step: **Optional: Change the Linux Kernel configuration**
 	* To configure the Linux property for a specific device family it is necessary to change the Linux Kernel configuration
 	* But for a first Yocto project build is the Linux Kernel configured well enough
 	* Read and change the BSP-layer with **"defcongig"**
