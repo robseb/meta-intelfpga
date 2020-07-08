@@ -44,21 +44,31 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* As a Building machine use regular *Ubuntu-Linux* **18.04 LTS** or **CentOS 7** running as a *Virtual Machine* (VM)
 	* Required components for the *Yocto Project* with **Ubuntu Linux**:
 		````bash
-		sudo apt-get install gawk wget git diffstat unzip texinfo gcc-multilib build-essential \
+		sudo apt-get install gawk wget \
+        git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools python-minimal python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev
 		````
 	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
 		````bash
+        sudo yum groupinstall "Development tools"
 		sudo yum install -y epel-release
         sudo yum makecache
         sudo yum install gawk make wget tar bzip2 gzip python3 unzip perl patch \
         diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath socat \
         perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue python36-pip xz \
         which SDL-devel xterm
-        sudo pip3 install GitPython jinja2
-                        
+        sudo pip3 install GitPython jinja2 
 		````
+    * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS*
+        ````
+        wget http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz 
+        tar xf tar-1.28.tar.gz
+        cd tar-1.28
+        ./configure  --prefix=/usr/local
+        make
+        sudo rm -r tar-1.28.tar.gz 
+        ````
 	* Install the *Yocto Project* it self with:
 		````bash
 		git clone git://git.yoctoproject.org/poky
