@@ -1,3 +1,8 @@
+![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Intel+SoC-FPGA&color=blue)
+![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell&color=darkgreen)
+![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
+<br>
+
 # BSP meta-layer for Intel (ALTERA) SoC-FPGAS (SoCFPGAs) and the Yocto Project 
 
 **With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs* is added to the Yocto Project.**
