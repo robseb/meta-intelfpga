@@ -46,7 +46,8 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash
 		sudo apt-get install gawk wget \
         git diffstat unzip texinfo gcc-multilib build-essential \
-        chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools python-minimal python3 python3-pip python3-pexpect \
+        chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
+        python-minimal python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev
 		````
 	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
@@ -60,21 +61,25 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         which SDL-devel xterm
         sudo pip3 install GitPython jinja2 
 		````
-    * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS*
-        ````
+    * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS 7*
+        ````bash
         cd ~
         wget http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz 
         tar xf tar-1.28.tar.gz
         cd tar-1.28
         ./configure  --prefix=/usr/local
         make
-        cd .
+        cd ..
         sudo rm -r tar-1.28.tar.gz 
         export set PATH=~/tar-1.28/src:$PATH
-        ````
-	* Install the *Yocto Project* it self with:
+        ````bash
+        * Check your *tar* version
+            ````bash
+            tar --version
+            ````
+	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
 		````bash
-		git clone git://git.yoctoproject.org/poky
+		git clone -b dunfell git://git.yoctoproject.org/poky.git
 		````
 2. Step: **Download this BSP-layer**
 	````bash
@@ -92,7 +97,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* The script should create the folder: "/build"
 
 4. Step: **Add this BSP-layer to your Yocto Project solution**
-	* Open the **"bblayers.conf"**-file *(poky/build/conf)* with a text editor, for example with *MS Visual Studio Code*:
+	* Open the **"bblayers.conf"**-file *(poky/build/conf)* with a text editor for example with *MS Visual Studio Code*:
 		````bash 
 		code conf/bblayers.conf
 		````
@@ -141,7 +146,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-ltsi"
 			````
 	* **Select the Linux Kernel Version**
-	 	* With following code line,it is possible to select the preferred Linux Kernel Version (here with Version 5.5)
+	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.5*)
 			````bibtabe
 			PREFERRED_VERSION_linux-altera = "5.5%"
 			````
@@ -149,8 +154,8 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* **Choosing Toolchain Versions**
 		* The following lines select the GCC and SDK Version:
 			````bibtabe
-			GCCVERSION = "linaro-5.2"
-			SDKGCCVERSION = "linaro-5.2"
+			GCCVERSION = "linaro-4.9"
+			SDKGCCVERSION = "linaro-4.9"
 			````
 		*Add this two lines to the **"local.conf"**-file independent of your machine choose 
  	* **Select the used CPU Version**
@@ -171,7 +176,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bibtabe
 		bitbake --show-versions | grep linux  
 		````
-6. Step: **Optional: Change the Linux Kernel configuration**
+7. Step: **Optional: Change the Linux Kernel configuration**
 	* To configure the Linux property for a specific device family it is necessary to change the Linux Kernel configuration
 	* But for a first *Yocto Project* build is the Linux Kernel configured well enough
 	* Read and change the BSP-layer with **"defcongig"**
@@ -195,17 +200,17 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash
 		bitbake -f -c compile virtual/kernel && bitbake -f -c deploy virtual/kernel
 		````
-7. Step: **Build the entire Yocto Project**
+8. Step: **Build the entire Yocto Project**
 	* With this command the complete *Yocto Project* build process starts (executed inside *poky/build/*): 
 	````bash
 	bitbake core-image-minimal
 	````
 	* This process can taken some time
-	* For an Intel Arria 10 SoC-FPGA following start print should appear:
+	* For an *Intel Arria 10 SoC-FPGA* following start print should appear:
 	![Alt text](doc/YoctoBuildHeader.jpg?raw=true "Yocto Project startup print")
 	* This signaled that bitbake was able to decode the previously shown configuration 
-8. Step: **Locate the final Kernel- and rootFs-File** 
-	* After a successful build the final compressed Linux Kernel file and the rootfs tar.gz- archive is stored here: 
+9. Step: **Locate the final Kernel- and rootFs-File** 
+	* After a successful build the final compressed Linux Kernel file and the *rootfs* "*tar.gz*"- archive is stored here: 
 		* for an **Intel Cyclone V:**
 		````txt
 		poky/build/tmp/delopy/images/cyclone5/
@@ -221,12 +226,12 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	![Alt text](doc/YocotoOutput.jpg?raw=true "Yocto Project output")
 <br>
 
-At this point a Linux for an Intel SoC-FPGA is generated. Unfortunately to boot this up also an device tree, a primary- and secondary bootloader and for Intel Arria and Stratix two FPGA configuration files must be required.
+At this point a Linux for an *Intel SoC-FPGA* is generated. Unfortunately to boot this up also an device tree, a primary- and secondary bootloader and for Intel Arria and Stratix two FPGA configuration files must be required.
 <br>
 
 # Continuation
 
-### How to desgin the requiered bootloaders and the DeviceTree with Intel EDS ?
+### How to desgin the requiered bootloaders and the *DeviceTree* with Intel EDS ?
 Inside my "*Mapping HPS Peripherals*, like *I²C* or *CAN*, over the *FPGA* fabric to *FPGA I/O* and using embedded Linux to control them"-guide I show that in details (see [here](https://github.com/robseb/HPS2FPGAmapping)).
 <br>
 
