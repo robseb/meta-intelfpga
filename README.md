@@ -62,12 +62,15 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````
     * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS*
         ````
+        cd ~
         wget http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz 
         tar xf tar-1.28.tar.gz
         cd tar-1.28
         ./configure  --prefix=/usr/local
         make
+        cd .
         sudo rm -r tar-1.28.tar.gz 
+        export set PATH=~/tar-1.28/src:$PATH
         ````
 	* Install the *Yocto Project* it self with:
 		````bash
