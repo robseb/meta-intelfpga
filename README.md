@@ -72,7 +72,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         cd ..
         sudo rm -r tar-1.28.tar.gz 
         export set PATH=~/tar-1.28/src:$PATH
-        ````bash
+        ````
         * Check your *tar* version
             ````bash
             tar --version
