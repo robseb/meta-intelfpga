@@ -250,7 +250,7 @@ I also wrote a python script to **pre-install Python pip (PyPI)- Packages within
 ### How to bring the output files to a bootable image?
 
 I desigend a Python script that can automate the boot image desgin with a specifiable partition table.
-It can generate an bootable image file with Kernel-,bootloader- and user-files.With the flexibility of this script it is compatible with *Intel* EDS build flow for example it can pre-install FPGA configuration files.   
+It can generate an bootable image file with Kernel-,bootloader- and user-files. With the flexibility of this script it is compatible with *Intel* EDS build flow for example it can pre-install FPGA configuration files.   
 Tools like "rufus" can write for instance a SD-card to enable the booting of a Linux Distribution.
 (see [here LinuxBootImageGenerator](https://github.com/robseb/LinuxBootImageGenerator))
 <br>
