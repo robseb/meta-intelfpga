@@ -232,23 +232,46 @@ At this point a Linux for an *Intel SoC-FPGA* is generated. Unfortunately to boo
 # Continuation
 
 ### How to desgin the requiered bootloaders and the *DeviceTree* with Intel EDS ?
-Inside my "*Mapping HPS Peripherals*, like *I²C* or *CAN*, over the *FPGA* fabric to *FPGA I/O* and using embedded Linux to control them"-guide I show that in details (see [here](https://github.com/robseb/HPS2FPGAmapping)).
+Inside my "*Mapping HPS Peripherals*, like *I²C* or *CAN*, over the *FPGA* fabric to *FPGA I/O* and using embedded Linux to control them"-guide I show that in details 
+(see [here](https://github.com/robseb/HPS2FPGAmapping)).
 <br>
 
+### How to access the FPGA-Manager?
+
 For accessing the FPGA-Manager or to execute shell scripts at boot up you can use my [**meta-rstools**](https://github.com/robseb/meta-rstools)-layer.
-I also wrote a python script to **pre-install Python pip (PyPI)- Packages within a final Yocto Project Linux Image** automatically (see [here](https://github.com/robseb/PiP2Bitbake)).
+<br>
+
+### How to embedded Python pip packages to a Yocto Project?
+
+I also wrote a python script to **pre-install Python pip (PyPI)- Packages within a final Yocto Project Linux Image** automatically 
+(see [here](https://github.com/robseb/PiP2Bitbake)).
+<br>
+
+### How to bring the output files to a bootable image?
+
+I desigend a Python script that can automate the boot image desgin with a specifiable partition table.
+It can generate an bootable image file with Kernel-,bootloader- and user-files.With the flexibility of this script it is compatible with *Intel* EDS build flow for example it can pre-install FPGA configuration files.   
+Tools like "rufus" can write for instance a SD-card to enable the booting of a Linux Distribution.
+(see [here LinuxBootImageGenerator](https://github.com/robseb/LinuxBootImageGenerator))
 <br>
 
 # Credits & Contribution
 Big thanks to [**Khem Raj**](https://github.com/kraj) for his maintaince work!
 <br>
 
-# Author
-* **Robin Sebastian**
 
-This guide is my own non official solution, as a part of this academic project: [*rsYocto*](https://github.com/robseb/rsyocto)
-Today I'm a Master Student of electronic engineering with the major embedded systems. 
-I ‘m looking for an interesting job offer to share and deepen my shown skills starting summer 2020.
+# Author
+
+**Robin Sebastian**
+
+*meta-intelfpga* and [*rsyocto*](https://github.com/robseb/rsyocto) are projects, that I have fully developed on my own.
+No companies are involved in my projects.
+I’m recently graduated as a master in electrical engineering with the major embedded systems (*M. Sc.*).
+
+I'm open for cooperations as a freelancer to realize your specific requirements.
+Otherwise, I‘m looking for an interesting full time job offer to share and deepen my shown skills.
+
+**[Github sponsoring is welcome.](https://github.com/sponsors/robseb)**
 
 
 [![Gitter](https://badges.gitter.im/rsyocto/community.svg)](https://gitter.im/rsyocto/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
