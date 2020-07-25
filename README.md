@@ -134,9 +134,9 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			````bitbake
 			MACHINE ="cyclone5"
 			````
-		* Be sure that default *"qwmux86"* is **removed**
+		* Be sure that default *"qwmux86-64"* is **removed**
 			````bitbake
-			# MACHINE ??= "qemux86"
+			# MACHINE ??= "qemux86-64"
 			````
 	* **Select the Linux Kernel type**
 		* If you want to use the regular **ALTERA socfpga-Linux Kernel** add the line above to the **"local.conf"**-file:
