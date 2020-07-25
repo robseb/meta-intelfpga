@@ -94,7 +94,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	source oe-init-build-env
 	````
 	* Do not run this command or any other Yocto commands as root!
-	* Do not use the command: “sudo ./ oe-init-build-env*”. With this line Bitbake crashes later during the build process without any traceable error message  
+	* Do not use the command: “*sudo ./ oe-init-build-env*”. With this line Bitbake crashes later during the build process without any traceable error message  
 	* The repeatment of this bitbkake command do not interact the choosen configuration 
 	* The script should create the folder: "/build"
 
@@ -128,7 +128,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash 
 		code conf/local.conf
 		````
-	* **Select your Intel SoC-FPGA family** by adding the value **"MACHINE** this configuration file
+	* **Select your Intel SoC-FPGA family** by adding the value **"MACHINE"** this configuration file
 		* For the different devices use string of the table above
 		* For example, for an Intel Cyclone V SoC-FPGA add following to this file:
 			````bitbake
@@ -161,7 +161,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			````
 		*Add this two lines to the **"local.conf"**-file independent of your machine choose 
  	* **Select the used CPU Version**
-		* For an Dual Core Intel (ALTERA) **Cyclone V**, **Arria V** or **Arria 10** add the following line to the "**local.conf"**-file:
+		* For an Dual Core Intel (ALTERA) **Cyclone V**, **Arria V** or **Arria 10** add the following line to the **"local.conf"**-file:
 		````bibtabe
 		DEFAULTTUNE = "cortexa9hf-neon"
 		````
