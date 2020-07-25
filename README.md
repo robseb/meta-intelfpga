@@ -82,12 +82,11 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
             ````
 	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
 		````bash
-		git clone -b dunfell git://git.yoctoproject.org/poky.git
+		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
 		````
 2. Step: **Download this BSP-layer**
 	````bash
-	cd poky/
-	git clone https://github.com/robseb/meta-intelfpga.git
+	cd poky/ && git clone https://github.com/robseb/meta-intelfpga.git
 	````
 
 3. Step: **Run the *bitbake* initialization script**
