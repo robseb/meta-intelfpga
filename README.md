@@ -47,7 +47,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		sudo apt-get install gawk wget \
         git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
-        python-minimal python3 python3-pip python3-pexpect \
+        python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev
 		````
 	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
