@@ -50,7 +50,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		sudo apt-get install gawk wget \
         git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
-        python-minimal python3 python3-pip python3-pexpect \
+        python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev
 		````
 	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
@@ -82,12 +82,11 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
             ````
 	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
 		````bash
-		git clone -b dunfell git://git.yoctoproject.org/poky.git
+		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
 		````
 2. Step: **Download this BSP-layer**
 	````bash
-	cd poky/
-	git clone https://github.com/robseb/meta-intelfpga.git
+	cd poky/ && git clone https://github.com/robseb/meta-intelfpga.git
 	````
 
 3. Step: **Run the *bitbake* initialization script**
@@ -95,7 +94,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	source oe-init-build-env
 	````
 	* Do not run this command or any other Yocto commands as root!
-	* Do not use the command: “sudo ./ oe-init-build-env*”. With this line Bitbake crashes later during the build process without any traceable error message  
+	* Do not use the command: “*sudo ./ oe-init-build-env*”. With this line Bitbake crashes later during the build process without any traceable error message  
 	* The repeatment of this bitbkake command do not interact the choosen configuration 
 	* The script should create the folder: "/build"
 
@@ -129,15 +128,15 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash 
 		code conf/local.conf
 		````
-	* **Select your Intel SoC-FPGA family** by adding the value **"MACHINE** this configuration file
+	* **Select your Intel SoC-FPGA family** by adding the value **"MACHINE"** this configuration file
 		* For the different devices use string of the table above
 		* For example, for an Intel Cyclone V SoC-FPGA add following to this file:
 			````bitbake
 			MACHINE ="cyclone5"
 			````
-		* Be sure that default *"qwmux86"* is **removed**
+		* Be sure that default *"qwmux86-64"* is **removed**
 			````bitbake
-			# MACHINE ??= "qemux86"
+			# MACHINE ??= "qemux86-64"
 			````
 	* **Select the Linux Kernel type**
 		* If you want to use the regular **ALTERA socfpga-Linux Kernel** add the line above to the **"local.conf"**-file:
@@ -162,7 +161,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			````
 		*Add this two lines to the **"local.conf"**-file independent of your machine choose 
  	* **Select the used CPU Version**
-		* For an Dual Core Intel (ALTERA) **Cyclone V**, **Arria V** or **Arria 10** add the following line to the "**local.conf"**-file:
+		* For an Dual Core Intel (ALTERA) **Cyclone V**, **Arria V** or **Arria 10** add the following line to the **"local.conf"**-file:
 		````bibtabe
 		DEFAULTTUNE = "cortexa9hf-neon"
 		````
