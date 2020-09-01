@@ -30,7 +30,7 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.0`, `5.1`, `5.2`, `5.3`, `5.4`, `5.5`, `5.6`
+| *"linux-altera"* | **Regular Linux Version** | `5.0`, `5.1`, `5.2`, `5.3`, `5.4`, `5.5`, `5.6`, `5.7`
 | *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130` 
 | *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** |  `4.14.126`
 
@@ -193,7 +193,8 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````
 		* A window like this should appear: 
 		![Alt text](doc/LinuxKerneMenueConfigl.jpg?raw=true "Linux Kernel menu Config")
-		
+		<br>
+
 		* Here it is possible to change any kernel settings, ARM-Platform specific settings or enable or disable some peripheral components
         * The *menueconfig* configuration will be stored on the same direcotory as the *defconfig*
 	* To execute any BSP-layer change use following command:
