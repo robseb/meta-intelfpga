@@ -1,0 +1,48 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          gatord
+# Required-Start:    $local_fs
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts gatord
+# Description:       Starts the Gator Daemon for ARM DS5
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+DESC="Gator"
+NAME="gatord"
+GATOR=`which $NAME`
+
+. /etc/init.d/functions || exit 1
+
+# Exit if the package is not installed
+[ -x "$GATOR" ] || exit 0
+
+case "$1" in
+    start)
+	echo -n "Starting $DESC: $NAME... "
+    depmod -a||true
+    modprobe gator
+	start-stop-daemon -S -b -x $GATOR -- $GATOR_ARGS
+	echo "done."
+	;;
+    stop)
+	echo -n "Stopping $DESC: $NAME... "
+	start-stop-daemon -K -x $GATOR
+	echo "done."
+	;;
+    restart)
+	echo "Restarting $DESC: $NAME... "
+	$0 stop
+	$0 start
+	echo "done."
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit 0
