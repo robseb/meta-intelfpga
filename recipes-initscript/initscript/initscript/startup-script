@@ -1,0 +1,6 @@
+#!/bin/sh
+# start up script 
+# this scipt will be execute before the system try to get a IPv4-Address from a DHCP Server
+echo "++++++++++++++++++++++++++++++++++++++++++++++"
+echo "The Startup Script was called"
+echo "++++++++++++++++++++++++++++++++++++++++++++++"
