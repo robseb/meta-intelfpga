@@ -75,18 +75,17 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         ````
         * Check your *git* version (*it should be 2.41+*)
             ````bash
-            git --version
+            tar --version
             ````
 	 * (*Only for CentOS 7:*) Install the latest *git* version to prevent error with bitbake
         ````bash
-        
         sudo yum remove git*
         sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-		sudo yum install -y git
+	sudo yum install -y git
         ````
         * Check your *tar* version
             ````bash
-            tar --version
+            git --version
             ````
 			
 	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
