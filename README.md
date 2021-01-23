@@ -73,6 +73,17 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         sudo rm -r tar-1.28.tar.gz 
         export set PATH=~/tar-1.28/src:$PATH
         ````
+        * Check your *git* version (*it should be 2.41+*)
+            ````bash
+            git --version
+            ````
+	 * (*Only for CentOS 7:*) Install the latest *git* version to prevent error with bitbake
+        ````bash
+        
+        sudo yum remove git*
+        sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
+		sudo yum install -y git
+        ````
         * Check your *tar* version
             ````bash
             tar --version
@@ -85,6 +96,10 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* Install the *Yocto Project* itself in Release *3.2 "Gatesgarth"*
 		````bash
 		cd && git clone -b gatesgarth git://git.yoctoproject.org/poky.git
+		````
+	* Ubdate the build tools (e.g *gcc*) to the requiered version for bitbake
+		````bash
+		cd poky/scripts && ./install-buildtools && cd  ..
 		````
 2. Step: **Download this BSP-layer**
 	````bash
@@ -153,6 +168,10 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.8*)
 			````bibtabe
 			PREFERRED_VERSION_linux-altera = "5.8%"
+			````
+		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) 5.4.74
+			````bibtabe
+			PREFERRED_VERSION_linux-altera = "5.4.74%"
 			````
 		* All supported Linux Kernel versions are listed above
 	* **Choosing Toolchain Versions**
