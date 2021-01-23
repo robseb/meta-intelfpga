@@ -1,5 +1,5 @@
 ![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Intel+SoC-FPGA&color=blue)
-![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell&color=darkgreen)
+![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell,Gatesgarth,&color=darkgreen)
 ![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
 <br>
 
@@ -30,9 +30,9 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.0`, `5.1`, `5.2`, `5.3`, `5.4`, `5.5`, `5.6`, `5.7`
-| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130` 
-| *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** |  `4.14.126`
+| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`,
+| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`,`5.4.74`
+| *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
 
 **The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
 
@@ -77,9 +77,14 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
             ````bash
             tar --version
             ````
+			
 	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
 		````bash
 		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
+		````
+	* Install the *Yocto Project* itself in Release *3.2 "Gatesgarth"*
+		````bash
+		cd && git clone -b Gatesgarth git://git.yoctoproject.org/poky.git
 		````
 2. Step: **Download this BSP-layer**
 	````bash
@@ -145,9 +150,9 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-ltsi"
 			````
 	* **Select the Linux Kernel Version**
-	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.5*)
+	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.8*)
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.5%"
+			PREFERRED_VERSION_linux-altera = "5.8%"
 			````
 		* All supported Linux Kernel versions are listed above
 	* **Choosing Toolchain Versions**
