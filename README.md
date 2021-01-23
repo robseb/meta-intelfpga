@@ -30,7 +30,7 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`,
+| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`
 | *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`,`5.4.74`
 | *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
 
@@ -55,7 +55,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         sudo yum groupinstall "Development tools"
 		sudo yum install -y epel-release
         sudo yum makecache
-        sudo yum install gawk make wget tar bzip2 gzip python3 unzip perl patch \
+        sudo yum install -y gawk make wget tar bzip2 gzip python3 unzip perl patch \
         diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath socat \
         perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue python36-pip xz \
         which SDL-devel xterm
@@ -84,7 +84,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````
 	* Install the *Yocto Project* itself in Release *3.2 "Gatesgarth"*
 		````bash
-		cd && git clone -b Gatesgarth git://git.yoctoproject.org/poky.git
+		cd && git clone -b gatesgarth git://git.yoctoproject.org/poky.git
 		````
 2. Step: **Download this BSP-layer**
 	````bash
