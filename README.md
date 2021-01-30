@@ -73,7 +73,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         ````
 		* Check your *tar* version
 		````bash
-		git --version
+		tar --version
 		````
       
 	 * (*Only for CentOS 7:*) Install the latest *git* version to prevent error with bitbake
