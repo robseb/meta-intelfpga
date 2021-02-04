@@ -21,7 +21,7 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 | **Device Family** | **Architecture** | **Machine Name**
 |:--|:--|:--|
 | Intel (*ALTERA*) **Cylone V** | *ARMv7A* | *MACHINE ="cyclone5"*
-| Intel (*ALTERA*) **Arria V**  | *ARMv7A* | *MACHINE ="arria5"*
+| Intel (*ALTERA*) **Arria V**   | *ARMv7A* | *MACHINE ="arria5"*
 | Intel (*ALTERA*) **Arria 10** | *ARMv7A* | *MACHINE ="arria10"*
 | Intel (*ALTERA*) **Stratix 10** | *ARMv8A* | *MACHINE ="stratix10"*
 | Intel (*ALTERA*) **Agilex** | *ARMv8A* | *MACHINE ="agilex"*
@@ -61,15 +61,13 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         which SDL-devel xterm gmp-devel mpfr-devel libmpc-devel
         sudo pip3 install GitPython jinja2 
 		````
-    * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS 7*
+    * (*Only for CentOS 7:*) Install *tar* Version *1.32* manually since only version *1.26* is available on *CentOS 7*
         ````bash
-        cd ~ && wget http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz 
-        tar xf tar-1.28.tar.gz && cd tar-1.28
-        ./configure  --prefix=/usr/local
-        make
-        cd ..
-        sudo rm -r tar-1.28.tar.gz 
-        export set PATH=~/tar-1.28/src:$PATH
+        cd ~ && wget  http://ftp.gnu.org/gnu/tar/tar-1.32.tar.gz
+        tar xf tar-1.32.tar.gz && cd tar-1.32
+        ./configure
+        sudo make && sudo make install
+        cd .. && sudo rm -r tar-1.32.tar.gz 
         ````
 		* Check your *tar* version
 		````bash
@@ -83,7 +81,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		sudo yum install -y git
         ````
       
-		* Check your *git* version (*it should be 2.41+*)
+		* Check your *git* version (*it should be 2.24+*)
 		````bash
 		git --version
 		````
@@ -95,6 +93,14 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		../gcc-9.3.0/configure --enable-languages=c,c++ --disable-multilib
 		make -j$(nproc)
 		sudo make install
+
+
+		wget https://releases.linaro.org/components/toolchain/gcc-linaro/latest-6/gcc-linaro-6.4-2017.11.tar.xz
+		tar -xf gcc-linaro-6.4-2017.11.tar.xz && cd gcc-linaro-6.4-2017.11
+		../gcc-linaro-6.4-2017.11-build/configure
+		make -j$(nproc)
+		sudo make install
+
         ````
         * Check your *gcc* version (*it should be 9.3.0*)
             ````bash
