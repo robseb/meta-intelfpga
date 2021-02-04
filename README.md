@@ -92,15 +92,6 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		mkdir gcc-9.3.0-build && cd gcc-9.3.0-build
 		../gcc-9.3.0/configure --enable-languages=c,c++ --disable-multilib
 		make -j$(nproc)
-		sudo make install
-
-
-		wget https://releases.linaro.org/components/toolchain/gcc-linaro/latest-6/gcc-linaro-6.4-2017.11.tar.xz
-		tar -xf gcc-linaro-6.4-2017.11.tar.xz && cd gcc-linaro-6.4-2017.11
-		../gcc-linaro-6.4-2017.11-build/configure
-		make -j$(nproc)
-		sudo make install
-
         ````
         * Check your *gcc* version (*it should be 9.3.0*)
             ````bash
