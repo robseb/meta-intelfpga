@@ -1,10 +1,10 @@
-LINUX_VERSION = "5.2"
+LINUX_VERSION = "5.8"
 
-SRCREV = "969da0f16f5b914bd1e53e8c5051ef9df4f561f2"
+SRCREV = "eb446787abdf0428c0057da2d88daabc39a32393"
 
 include linux-altera.inc
 
-LIC_FILES_CHKSUM = "file://COPYING;md5=bbea815ee2795b2f4230826c0c6b8814"
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
 

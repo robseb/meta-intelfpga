@@ -1,5 +1,5 @@
 ![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Intel+SoC-FPGA&color=blue)
-![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell&color=darkgreen)
+![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell,Gatesgarth&color=darkgreen)
 ![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
 <br>
 
@@ -21,7 +21,7 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 | **Device Family** | **Architecture** | **Machine Name**
 |:--|:--|:--|
 | Intel (*ALTERA*) **Cylone V** | *ARMv7A* | *MACHINE ="cyclone5"*
-| Intel (*ALTERA*) **Arria V**  | *ARMv7A* | *MACHINE ="arria5"*
+| Intel (*ALTERA*) **Arria V**   | *ARMv7A* | *MACHINE ="arria5"*
 | Intel (*ALTERA*) **Arria 10** | *ARMv7A* | *MACHINE ="arria10"*
 | Intel (*ALTERA*) **Stratix 10** | *ARMv8A* | *MACHINE ="stratix10"*
 | Intel (*ALTERA*) **Agilex** | *ARMv8A* | *MACHINE ="agilex"*
@@ -30,9 +30,9 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.0`, `5.1`, `5.2`, `5.3`, `5.4`, `5.5`, `5.6`, `5.7`
-| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130` 
-| *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** |  `4.14.126`
+| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`
+| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`,`5.4.74`
+| *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
 
 **The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
 
@@ -55,31 +55,60 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         sudo yum groupinstall "Development tools"
 		sudo yum install -y epel-release
         sudo yum makecache
-        sudo yum install gawk make wget tar bzip2 gzip python3 unzip perl patch \
+        sudo yum install -y gawk make wget tar bzip2 gzip python3 unzip perl patch \
         diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath socat \
         perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue python36-pip xz \
-        which SDL-devel xterm
+        which SDL-devel xterm gmp-devel mpfr-devel libmpc-devel
         sudo pip3 install GitPython jinja2 
 		````
-    * (*Only for CentOS 7:*) Install *tar* Version *1.28* manually since only version *1.26* is available on *CentOS 7*
+    * (*Only for CentOS 7:*) Install *tar* Version *1.32* manually since only version *1.26* is available on *CentOS 7*
         ````bash
-        cd ~
-        wget http://ftp.gnu.org/gnu/tar/tar-1.28.tar.gz 
-        tar xf tar-1.28.tar.gz
-        cd tar-1.28
-        ./configure  --prefix=/usr/local
-        make
-        cd ..
-        sudo rm -r tar-1.28.tar.gz 
-        export set PATH=~/tar-1.28/src:$PATH
+        cd ~ && wget  http://ftp.gnu.org/gnu/tar/tar-1.32.tar.gz
+        tar xf tar-1.32.tar.gz && cd tar-1.32
+        ./configure
+        sudo make && sudo make install
+        cd .. && sudo rm -r tar-1.32.tar.gz 
         ````
-        * Check your *tar* version
+		* Check your *tar* version
+		````bash
+		tar --version
+		````
+      
+	 * (*Only for CentOS 7:*) Install the latest *git* version to prevent error with bitbake
+        ````bash
+        sudo yum remove git*
+        sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
+		sudo yum install -y git
+        ````
+      
+		* Check your *git* version (*it should be 2.24+*)
+		````bash
+		git --version
+		````
+	 * (*Only for CentOS 7:*) Install a later version of the *gcc* compliler
+        ````bash
+		wget ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz
+		tar zxf gcc-9.3.0.tar.gz
+		mkdir gcc-9.3.0-build && cd gcc-9.3.0-build
+		../gcc-9.3.0/configure --enable-languages=c,c++ --disable-multilib
+		make -j$(nproc)
+        ````
+        * Check your *gcc* version (*it should be 9.3.0*)
             ````bash
-            tar --version
+            gcc --version
             ````
+			
 	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
 		````bash
 		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
+		````
+	* Install the *Yocto Project* itself in Release *3.2 "Gatesgarth"*
+		````bash
+		cd && git clone -b gatesgarth git://git.yoctoproject.org/poky.git
+		````
+	* Ubdate the build tools (e.g *gcc*) to the requiered version for bitbake
+		````bash
+		cd poky/scripts && ./install-buildtools && cd  ..
 		````
 2. Step: **Download this BSP-layer**
 	````bash
@@ -145,9 +174,13 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-ltsi"
 			````
 	* **Select the Linux Kernel Version**
-	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.5*)
+	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.8*)
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.5%"
+			PREFERRED_VERSION_linux-altera = "5.8%"
+			````
+		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) 5.4.74
+			````bibtabe
+			PREFERRED_VERSION_linux-altera = "5.4.74%"
 			````
 		* All supported Linux Kernel versions are listed above
 	* **Choosing Toolchain Versions**
