@@ -30,8 +30,9 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`
-| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`,`5.4.74`
+| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`, `5.10`
+| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`
+| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.74`, `5.4.84` 
 | *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
 
 **The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
@@ -172,6 +173,10 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		* If you want the **long term stable (LTSI) ALTERA socfpga-Linux Kernel** use this line:
 			````bitbake
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-ltsi"
+			````
+		* For later (Linux Kernel >5) use following term:
+			````bitbake
+			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-lts"
 			````
 	* **Select the Linux Kernel Version**
 	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.8*)

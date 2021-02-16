@@ -1,7 +1,5 @@
 # Add a Bitbake recipe file to support a new Linux Kernel release
 
-
-
 1. **Clone the Linux Kernel to the developer machine**
     ````bash
     git clone https://github.com/altera-opensource/linux-socfpga.git
