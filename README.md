@@ -5,16 +5,25 @@
 
 # BSP meta-layer for Intel (*ALTERA*) SoC-FPGAS (*SoCFPGAs*) and the *Yocto Project* 
 
-**With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs (SoCFPGA)* is added to the *Yocto Project*.**
+**With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs (SoCFPGA)* is added to the *Yocto Project*.** <br>
+**It can bring with the *rstools* useful tools to interact with the FPGA fabric (e.g. Changing the FPGA configuration or accessing all ARM AXI Bride interfaces).** <br>
+**In addition, is the ARM Development Studio (*DS-5*) *Streamline* Server [*gator*](https://github.com/ARM-software/gator) included.**
 
 Usually the *Yocto Project* can generate all required components (rootfs, *device tree*, bootloaders,...) to boot up a final embedded Linux. But this is not compatible with [Intel's Boot flow](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/an/an709.pdf).
 This Bootflow uses the Intel *Embedded Design Suite* (*EDS*) to build the device tree and all necessary bootloaders. 
 
 For that reason, I designed a version that is compatible with *Intel's* development tools.  
-This includes the board specific *u-boot-* and device tree-generation and the support for only the *.tar.gz*-file type for the *rootFs*. 
+This includes the board specific *u-boot-* and device tree-generation and the support for only the *.tar.gz*-file type for the *rootfs*. 
 
-I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an open source embedded Linux System for Intel SoC-FPGAs, by me own. 
+I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an open source embedded Linux Distribution for Intel SoC-FPGAs, by me own. 
+The flexibility of my own [**rsYocto build system**](https://github.com/robseb/rsyocto#build-system-for-generation-of-custom-rsyocto-flavors) allows you to use it for your own projects with your custom embedded Linux. 
  
+For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rstools* it is possible to change FPGA configuration of a Intel *Cyclone V SoC-FPGA*: <br>
+![Alt text](doc/FPGAConfigurationAction.gif?raw=true "Write FPGA Configuration")
+**More *rstools* examples are available [here inside my *rsYocto* guide](https://github.com/robseb/rsyocto/blob/rsYocto-1.04/doc/guides/2_FPGA_HARDIP.md).
+
+**Note:** Right now are the *rstools* only for the Intel *Cyclone V*- and Intel *Arria 10 SX*- SoC-FPGA available. 
+
 
 ## Supported Device families
 
@@ -25,6 +34,7 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 | Intel (*ALTERA*) **Arria 10** | *ARMv7A* | *MACHINE ="arria10"*
 | Intel (*ALTERA*) **Stratix 10** | *ARMv8A* | *MACHINE ="stratix10"*
 | Intel (*ALTERA*) **Agilex** | *ARMv8A* | *MACHINE ="agilex"*
+<br>
 
 ## Linux Kernel Types
 
@@ -35,8 +45,58 @@ I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an op
 | *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.74`, `5.4.84` 
 | *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
 
-**The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
 
+**The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
+<br>
+
+
+## List of *rstools* to interact with the FPGA-fabric
+
+| **Linux Command Name** | **Description** | **CV** | **A10**  | **Bitbake value**
+|:--|:--|:--|:--|:--|
+|`FPGA-status` | **Reading the Status of the FPGA fabric** | **Y** | **Y** | *statusfpga* 
+|`FPGA-readMSEL` | **Reading the Configuration mode of the FPGA (selected with the MSEL-Bit Switch)** | **Y** | **Y** | *mselfpga*
+|`FPGA-resetFabric` | **Resetting the FPGA fabric (remove the FPGA running configuration)** | **Y** | **N** | *resetfabricfpga*
+|`FPGA-writeConfig` | **Writing a new FPGA configuration with a configuration file** | **Y** | **N** | *writeconfigfpga*
+|`FPGA-FPGA-readBridge` | **Reading from a address of a AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | **Y** | **Y** | *readbridgesfpga*
+|`FPGA-FPGA-writeBridge` | **Writing to a address of a AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | **Y** | **Y**  | *writebridgefpga*
+|`FPGA-gpiRead` | **Reading the 32 Bit direct access general propose input Register (GPI) (written by the FPGA)** | **Y** | **N** | *readfgpipga*
+|`FPGA-gpoWrite` | **Writing the 32 Bit direct access general propose output Register (GPO)** | **Y** | **N**  | *writegpofpga*
+
+
+The source code of the *rstools* is here available: [For the Intel Cyclone V](https://github.com/robseb/rstoolsCY5) and [For the Intel Arria 10](https://github.com/robseb/rstoolsA10)
+<br>
+
+## List of available additional components 
+
+| **Component Name** | **Description** | **Bitbake value**
+|:--|:--|:--|
+| `gator` | [**ARM Development Studio (*DS-5*) Streamline server**](https://github.com/ARM-software/gator) | *gator* 
+| `initscript`| **Enables to execute various init scripts during Linux booting at different booting levels** | *initscript* 
+| `/recipes-pip` | **This folder contains various Python pip (*PyPi*) packages that will be pre-installed to the Python package index** | *pip-<pip name>*
+<br>
+
+The Python package index (*PyPi*) pip packages inside the folder `recipes-pip` are automatically generated by my Python script [**PiP2Bitbake**](https://github.com/robseb/PiP2Bitbake) and can be seen as a example. <br>
+**This Python script allows to pre-install any Python pip (PyPI) (Python Package Index)- Packages within a final Yocto Project Linux Image.** <br>
+It will generate a *Bitbake* recipe file. This file can easily via drag&drop insisted into this folder. Then it will be possible to automatically pre-install the chosen package to the Python package index of the generated embedded Linux Distribution.      
+
+<br>
+
+<br>
+
+## Tested Development Machine Setup
+
+* **OS**
+	* **CentOS 7**
+	* **CentOS 8**
+	* **Ubuntu 18.04 lts**
+* **Yocto Project Relases**
+	* **Zeus**    (*3.0*)
+	* **Dunfell** (*3.1*) (*recommenced due to the best support of other meta-layers!*)
+	* **Gatesgarth** (*3.2*)
+ <br>
+
+<br>
 
 ## Getting started with the *Yocto Project* and usage of this BSP-layer
 
@@ -231,6 +291,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````
 		* A window like this should appear: 
 		![Alt text](doc/LinuxKerneMenueConfigl.jpg?raw=true "Linux Kernel menu Config")
+
 		<br>
 
 		* Here it is possible to change any kernel settings, ARM-Platform specific settings or enable or disable some peripheral components
@@ -239,7 +300,18 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash
 		bitbake -f -c compile virtual/kernel && bitbake -f -c deploy virtual/kernel
 		````
-8. Step: **Build the entire Yocto Project**
+8. Step: **Pre-install addional tools, like my *rstools* to interact with the FPGA configuration**
+    * To pre-install addional components from this metal-layer it is only nessary to add the *Bitbake value* (*as shown in the tables above*) to the *local.conf* file
+    * For instance to pre-install the ARM *Streamline* `gator` Server insert following line to *local.conf* (*poky/build/conf/local.conf*)
+    ```bash
+	IMAGE_INSTALL_append += "gator"
+	``` 
+    * For installing all *rstools* use following term
+    ```bash
+	IMAGE_INSTALL_append = " mselfpga readbridgesfpga resetfabricfpga statusfpga writebridgefpga writeconfigfpga writegpofpga readfgpipga "
+	``` 
+
+9. Step: **Build the entire Yocto Project**
 	* With this command the complete *Yocto Project* build process starts (executed inside *poky/build/*): 
 	````bash
 	bitbake core-image-minimal
@@ -247,8 +319,9 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* This process can taken some time
 	* For an *Intel Arria 10 SoC-FPGA* following start print should appear:
 	![Alt text](doc/YoctoBuildHeader.jpg?raw=true "Yocto Project startup print")
+
 	* This signaled that bitbake was able to decode the previously shown configuration 
-9. Step: **Locate the final Kernel- and rootFs-File** 
+10. Step: **Locate the final Kernel- and rootfs-File** 
 	* After a successful build the final compressed Linux Kernel file and the *rootfs* "*tar.gz*"- archive is stored here: 
 		* for an **Intel Cyclone V:**
 		````txt
@@ -259,10 +332,11 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		poky/build/tmp/delopy/images/arria10/
 		````
 	* The rootFs-file is called: **core-image-minimal-cyclone5-<*Date Code*>.rootfs.tar.gz**
-	* The Linux Kernel file is called: **zImage-<*...+>.bin**
+	* The Linux Kernel file is called: **zImage-<...+>.bin**
 	* Be sure that the files are **not a Shortcut**!
 	* In the case of an Intel Cyclone V, these two files are located here:
 	![Alt text](doc/YocotoOutput.jpg?raw=true "Yocto Project output")
+
 <br>
 
 At this point a Linux for an *Intel SoC-FPGA* is generated. Unfortunately to boot this up also an device tree, a primary- and secondary bootloader and for Intel Arria and Stratix two FPGA configuration files must be required.
@@ -275,10 +349,6 @@ Inside my "*Mapping HPS Peripherals*, like *I²C* or *CAN*, over the *FPGA* fabr
 (see [here](https://github.com/robseb/HPS2FPGAmapping)).
 <br>
 
-### How to access the FPGA-Manager?
-
-For accessing the FPGA-Manager or to execute shell scripts at boot up you can use my [**meta-rstools**](https://github.com/robseb/meta-rstools)-layer.
-<br>
 
 ### How to embedded Python pip packages to a Yocto Project?
 
