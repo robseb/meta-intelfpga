@@ -21,7 +21,7 @@ The flexibility of my own [**rsYocto build system**](https://github.com/robseb/r
 For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rstools* it is possible to change FPGA configuration of a Intel *Cyclone V SoC-FPGA*: <br>
 ![Alt text](doc/FPGAConfigurationAction.gif?raw=true "Write FPGA Configuration")
 
-**More *rstools* examples are available [here inside my *rsYocto* guide](https://github.com/robseb/rsyocto/blob/rsYocto-1.04/doc/guides/2_FPGA_HARDIP.md).**
+**More *rstools* examples are available [here inside my *rsYocto* guide](https://github.com/robseb/rsyocto/blob/rsYocto-1.04/doc/guides/2_FPGA_HARDIP.md#interacting-with-fpga-ip).**
 
 **Note:** Right now are the *rstools* only for the Intel *Cyclone V*- and Intel *Arria 10 SX*- SoC-FPGA available. 
 
