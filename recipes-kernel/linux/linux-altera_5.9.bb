@@ -1,3 +1,8 @@
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Linux Kernel 5.9 for Intel PSG (ALTERA) SoC-FPGAs"
+DESCRIPTION = "Linux Kernel 5.9 for Intel PSG (ALTERA) SoC-FPGAs" 
+
 LINUX_VERSION = "5.9"
 
 # Note: During development! (Commit from Sun Nov 1 14:02:56 2020)

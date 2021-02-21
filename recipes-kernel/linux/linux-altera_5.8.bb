@@ -1,3 +1,8 @@
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Linux Kernel 5.8 for Intel PSG (ALTERA) SoC-FPGAs"
+DESCRIPTION = "Linux Kernel 5.8 for Intel PSG (ALTERA) SoC-FPGAs" 
+
 LINUX_VERSION = "5.8"
 
 SRCREV = "eb446787abdf0428c0057da2d88daabc39a32393"

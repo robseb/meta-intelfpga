@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
 
 SUMMARY = "Read Intel SOC-FPGA MSEL (mode select) tool"
 DESCRIPTION = "Tool to read via the Intel FPGA Manager the MSEL (mode select) switch of a SoC-FPGA development board" 

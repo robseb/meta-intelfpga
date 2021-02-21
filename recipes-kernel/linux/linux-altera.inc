@@ -1,6 +1,7 @@
-# Robin Sebastian (git@robseb.de)
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
 
-DESCRIPTION = "Altera Linux kernel"
+SUMMARY = "Linux Kernel for Intel PSG (ALTERA) SoC-FPGAs"
+DESCRIPTION = "Linux Kernel  for Intel PSG (ALTERA) SoC-FPGAs" 
 LICENSE = "GPLv2"
 
 KERNEL_REPO ?= "git://github.com/altera-opensource/linux-socfpga.git"

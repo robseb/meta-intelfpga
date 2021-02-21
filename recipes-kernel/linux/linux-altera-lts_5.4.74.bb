@@ -1,3 +1,9 @@
+
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Linux Kernel 5.4.74 LTS for Intel PSG (ALTERA) SoC-FPGAs"
+DESCRIPTION = "Linux Kernel 5.4.74 LTS for Intel PSG (ALTERA) SoC-FPGAs" 
+
 LINUX_VERSION = "5.4.74"
 LINUX_VERSION_SUFFIX = "-lts"
 
