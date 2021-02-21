@@ -1,5 +1,9 @@
+#
+## Robin Sebastian (git@robseb.de)
+#
+
 SUMMARY = "DS-5 Streamline Gator daemon"
-DESCRIPTION = "Server task for using ARM DS-5 Streamline for performace analyzation"
+DESCRIPTION = "Server application for using the ARM Development Studio (DS-5) Streamline for performace analyzation"
 LICENSE = "MIT"
 
 LIC_FILES_CHKSUM = "file://daemon/COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
