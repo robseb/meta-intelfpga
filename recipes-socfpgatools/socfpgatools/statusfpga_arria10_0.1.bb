@@ -1,6 +1,7 @@
-# Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to read the Status of the FPGA Fabric with FPGA Manager (A10)" 
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Read the FPGA Fabric Status"
+DESCRIPTION = "Tool to read via the Intel FPGA Manager the status of the FPGA Fabric" 
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"

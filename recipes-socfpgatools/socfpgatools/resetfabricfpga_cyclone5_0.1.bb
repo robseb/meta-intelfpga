@@ -1,6 +1,7 @@
-# Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to delate the FPGA Fabric configuration with the FPGA manager" 
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Reset the FPGA Fabric"
+DESCRIPTION = "Tool to remove via the Intel FPGA Manager the FPGA Fabric configuration by putting it to reset" 
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"

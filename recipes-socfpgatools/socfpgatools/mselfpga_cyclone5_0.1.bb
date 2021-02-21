@@ -1,6 +1,7 @@
-# Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to read the FPGA MSEL Switch with the FPGA Manager" 
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Read Intel SOC-FPGA MSEL (mode select) tool"
+DESCRIPTION = "Tool to read via the Intel FPGA Manager the MSEL (mode select) switch of a SoC-FPGA development board" 
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"

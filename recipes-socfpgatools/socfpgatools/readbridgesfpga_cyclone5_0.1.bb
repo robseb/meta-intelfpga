@@ -1,6 +1,10 @@
 # Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to read any bridge to FPGA address" 
+
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Read all Intel SoC-FPGA AXI Bridges (lw2fpga; hps2fpga bridge)"
+DESCRIPTION = "Tool to write to all Intel SoC-FPGA AXI Bridges (Lightweight HPS-to-FPGA- and HPS-to-FPGA-Bridge) and the MPU Memory space"  
+
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"

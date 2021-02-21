@@ -1,6 +1,7 @@
-# Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to read the general purpose input line from the FPGA (A10)" 
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Read GPI (general purpose input) register of the Intel FPGA Manager"
+DESCRIPTION = "Tool to read via the Intel FPGA Manager the GPI (general purpose input) register that can be written by the FPGA" 
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0" 

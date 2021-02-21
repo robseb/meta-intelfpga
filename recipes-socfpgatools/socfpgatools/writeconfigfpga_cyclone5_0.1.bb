@@ -1,6 +1,7 @@
-# Robin Sebastian (https://github.com/robseb) 2019-2020
-SUMMARY = "bitbake-layers recipe"
-DESCRIPTION = "rstools application to write a new configuration to the FPGA fabric" 
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+
+SUMMARY = "Tool to load a new FPGA Configuration for Intel SoC-FPGAs"
+DESCRIPTION = "Tool to change via the Intel FPGA Manger the FPGA configuration of a Intel SoC-FPGA"  
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"

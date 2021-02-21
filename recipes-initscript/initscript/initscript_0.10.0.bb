@@ -1,4 +1,4 @@
-DESCRIPTON = "Startup scripts"
+DESCRIPTON = "Run-time startup shell scripts that are executed during boot"
 LICENSE = "MIT"
 
 # Recipe revision - don't forget to 'bump' when a new revision is created !
