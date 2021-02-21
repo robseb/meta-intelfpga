@@ -1,3 +1,5 @@
+# Robin Sebastian (git@robseb.de)
+
 DESCRIPTION = "Altera Linux kernel"
 LICENSE = "GPLv2"
 
@@ -9,6 +11,7 @@ DEPENDS += "bc-native"
 # Kernel CONFIG_LOCALVERSION
 LINUX_VERSION_EXTENSION ?= "-altera"
 
+
 # Build branch name
 LINUX_VERSION_PREFIX ?= "socfpga-"
 LINUX_VERSION_SUFFIX ?= ""
@@ -19,10 +22,13 @@ SRCREV_machine ?= "${AUTOREV}"
 PV = "${LINUX_VERSION}${LINUX_VERSION_SUFFIX}"
 PV_append = "+git${SRCPV}"
 
-
 KBRANCH ?= "${LINUX_VERSION_PREFIX}${LINUX_VERSION}${LINUX_VERSION_SUFFIX}"
 
-SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KBRANCH}"
+# KBUILD_DEFCONFIG ?= "intelfpga_kernelConf.config"
+
+SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KBRANCH} \
+            file://defconfig"
+
 
 require recipes-kernel/linux/linux-yocto.inc
-require linux-altera-configs.inc
+# require linux-altera-configs.inc

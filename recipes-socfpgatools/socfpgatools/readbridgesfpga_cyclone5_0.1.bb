@@ -15,7 +15,7 @@ COMPATIBLE_MACHINE = 'cyclone5'
 inherit cmake
 
 S = "${WORKDIR}/git/FPGA-readBridge"
-FILES_${PN} += "${bindir}"
+FILES_${P}N += "${bindir}"
 
 do_install() {
     install -d ${D}${bindir}
