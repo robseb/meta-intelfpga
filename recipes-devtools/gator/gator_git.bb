@@ -9,7 +9,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://daemon/COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 # Use the latest gator version 
-SRCREV = "${AUTOREV}" 
+SRCREV = "bbc8e3121879591f0f85ebbc2d24367c52c547c2" 
 
 SRC_URI = "git://github.com/ARM-software/gator.git;protocol=http;branch=master \
            file://gator.init"
