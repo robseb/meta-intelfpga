@@ -104,7 +104,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* As a Building machine use regular *Ubuntu-Linux* **18.04 LTS** or **CentOS 7** running as a *Virtual Machine* (VM)
 	* Required components for the *Yocto Project* with **Ubuntu Linux**:
 		````bash
-		sudo apt-get -y install gawk wget libgmp3-dev \
+		sudo apt-get -y install gawk wget libgmp3-dev libmpc-dev \
         git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
         python3 python3-pip python3-pexpect \
