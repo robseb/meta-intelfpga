@@ -88,7 +88,8 @@ It will generate a *Bitbake* recipe file. This file can easily via drag&drop ins
 * **OS**
 	* **CentOS 7**
 	* **CentOS 8**
-	* **Ubuntu 18.04 lts**
+	* **Ubuntu 18.04 LTS**
+	* **Ubuntu 20.04 LTS**
 * **Yocto Project Relases**
 	* **Zeus**    (*3.0*)
 	* **Dunfell** (*3.1*) (*recommenced due to the best support of other meta-layers!*)
