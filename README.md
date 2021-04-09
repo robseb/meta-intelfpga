@@ -375,7 +375,7 @@ Tools like "rufus" can write for instance a SD-card to enable the booting of a L
  
 The ***rsyocto* build system** can use the information provided by the *Intel Quartus Prime* FPGA project to compile and configure the bootloader (*u-boot*) to boot up an embedded Linux and to configure the FPGA Fabric with the *Intel Quartus Prime FPGA project*. The build system changes the rootfs of the embedded Linux und uses XML-files for configuration to automate every essential step to archive a good experience of a modern Linux Distribution. 
 **It can directly use output files of the Yocto Project to generate a custom bootable Linux Distribution for Intel Cylone V- and Intel Arria 10 SX SoC-FPGAs.**
-Please follow me detailed guide XXXXXXXXXXXX. 
+Please follow me [**detailed guide**](https://github.com/robseb/rsyocto/blob/rsYocto-1.042/doc/guides/9_customYoctoVersions.md). 
 
 
 <br>
