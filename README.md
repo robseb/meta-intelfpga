@@ -3,7 +3,7 @@
 ![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
 <br>
 
-# BSP meta-layer for Intel (*ALTERA*) SoC-FPGAS (*SoCFPGAs*) and the *Yocto Project* 
+# BSP meta-layer for Intel (*ALTERA*) SoC-FPGAS (*SoCFPGAs*) and the *OpenEmbedded Yocto Project* 
 
 **With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs (SoCFPGA)* is added to the *Yocto Project*.** <br>
 **It can bring with the *rstools* useful tools to interact with the FPGA fabric (e.g. Changing the FPGA configuration or accessing all ARM AXI Bride interfaces).** <br>
@@ -15,13 +15,13 @@ This Bootflow uses the Intel *Embedded Design Suite* (*EDS*) to build the device
 For that reason, I designed a version that is compatible with *Intel's* development tools.  
 This includes the board specific *u-boot-* and device tree-generation and the support for only the *.tar.gz*-file type for the *rootfs*. 
 
-I used this layer to build [*rsYocto*](https://github.com/robseb/rsyocto), an open source embedded Linux Distribution for Intel SoC-FPGAs, by me own. 
-The flexibility of my own [**rsYocto build system**](https://github.com/robseb/rsyocto#build-system-for-generation-of-custom-rsyocto-flavors) allows you to use it for your own projects with your custom embedded Linux. 
+I used this layer to build [*rsyocto*](https://github.com/robseb/rsyocto), an open source embedded Linux Distribution for Intel SoC-FPGAs, by me own. 
+The flexibility of my own [**rsyocto build system**](https://github.com/robseb/rsyocto#build-system-for-generation-of-custom-rsyocto-flavors) allows you to use it for your own projects with your custom embedded Linux. 
  
 For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rstools* it is possible to change FPGA configuration of a Intel *Cyclone V SoC-FPGA*: <br>
 ![Alt text](doc/FPGAConfigurationAction.gif?raw=true "Write FPGA Configuration")
 
-**More *rstools* examples are available [here inside my *rsYocto* guide](https://github.com/robseb/rsyocto/blob/rsYocto-1.04/doc/guides/2_FPGA_HARDIP.md#interacting-with-fpga-ip).**
+**More *rstools* examples are available [here inside my *rsyocto* guide](https://github.com/robseb/rsyocto/blob/rsyocto-1.042/doc/guides/2_FPGA_HARDIP.md#interacting-with-fpga-ip).**
 
 **Note:** Right now are the *rstools* only for the Intel *Cyclone V*- and Intel *Arria 10 SX*- SoC-FPGA available. 
 
@@ -41,7 +41,7 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`, `5.10`
+| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`, `5.10`, `5.11`
 | *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`
 | *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.74`, `5.4.84` 
 | *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
@@ -102,7 +102,7 @@ It will generate a *Bitbake* recipe file. This file can easily via drag&drop ins
 
 The following step by step guide shows how to use this layer to build a Yocto-based Linux System for an Intel SoC-FPGAs:
 1. Step: **Install the latest Version of the *Yocto Project***
-	* As a Building machine use regular *Ubuntu-Linux* **18.04 LTS** or **CentOS 7** running as a *Virtual Machine* (VM)
+	* As a Building machine use regular *Ubuntu-Linux* or **CentOS Linux** running as a *Virtual Machine* (VM)
 	* Required components for the *Yocto Project* with **Ubuntu Linux**:
 		````bash
 		sudo apt-get -y install gawk wget libgmp3-dev libmpc-dev \
@@ -364,10 +364,20 @@ I also wrote a python script to **pre-install Python pip (PyPI)- Packages within
 
 ### How to bring the output files to a bootable image?
 
+![Alt text](doc/BuildSystemHead.png?raw=true "Symbol of the build system")
+**Build System: Use your *Intel Quartus Prime* FPGA project to create your own *rsyocto* with your FPGA Configuration**
+___
+
 I desigend a Python script that can automate the boot image desgin with a specifiable partition table.
 It can generate an bootable image file with Kernel-,bootloader- and user-files. With the flexibility of this script it is compatible with *Intel* EDS build flow for example it can pre-install FPGA configuration files.   
 Tools like "rufus" can write for instance a SD-card to enable the booting of a Linux Distribution.
-(see [here LinuxBootImageGenerator](https://github.com/robseb/LinuxBootImageGenerator))
+(see [here LinuxBootImageGenerator](https://github.com/robseb/LinuxBootImageGenerator)).
+ 
+The ***rsyocto* build system** can use the information provided by the *Intel Quartus Prime* FPGA project to compile and configure the bootloader (*u-boot*) to boot up an embedded Linux and to configure the FPGA Fabric with the *Intel Quartus Prime FPGA project*. The build system changes the rootfs of the embedded Linux und uses XML-files for configuration to automate every essential step to archive a good experience of a modern Linux Distribution. 
+**It can directly use output files of the Yocto Project to generate a custom bootable Linux Distribution for Intel Cylone V- and Intel Arria 10 SX SoC-FPGAs.**
+Please follow me detailed guide XXXXXXXXXXXX. 
+
+
 <br>
 
 # Credits & Contribution
@@ -377,7 +387,8 @@ Big thanks to [**Khem Raj**](https://github.com/kraj) for his maintaince work!
 
 # Author
 
-**Robin Sebastian**
+* **Robin Sebastian [(LinkedIn)](https://www.linkedin.com/in/robin-sebastian-a5080220a)**
+
 
 *meta-intelfpga* and [*rsyocto*](https://github.com/robseb/rsyocto) are projects, that I have fully developed on my own.
 No companies are involved in my projects.
