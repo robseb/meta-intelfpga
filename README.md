@@ -30,11 +30,11 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 | **Device Family** | **Architecture** | **Machine Name**
 |:--|:--|:--|
-| Intel (*ALTERA*) **Cylone V** | *ARMv7A* | *MACHINE ="cyclone5"*
-| Intel (*ALTERA*) **Arria V**   | *ARMv7A* | *MACHINE ="arria5"*
-| Intel (*ALTERA*) **Arria 10** | *ARMv7A* | *MACHINE ="arria10"*
-| Intel (*ALTERA*) **Stratix 10** | *ARMv8A* | *MACHINE ="stratix10"*
-| Intel (*ALTERA*) **Agilex** | *ARMv8A* | *MACHINE ="agilex"*
+| Intel (*ALTERA*) **Cylone V** SoC-FPGA | *ARMv7A* | *MACHINE ="cyclone5"*
+| Intel (*ALTERA*) **Arria V** SoC-FPGA   | *ARMv7A* | *MACHINE ="arria5"*
+| Intel (*ALTERA*) **Arria 10** SoC-FPGA | *ARMv7A* | *MACHINE ="arria10"*
+| Intel (*ALTERA*) **Stratix 10** SoC-FPGA | *ARMv8A* | *MACHINE ="stratix10"*
+| Intel (*ALTERA*) **Agilex** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex"*
 <br>
 
 ## Linux Kernel Types
@@ -328,18 +328,18 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* This signaled that bitbake was able to decode the previously shown configuration 
 11. Step: **Locate the final Kernel- and rootfs-File** 
 	* After a successful build the final compressed Linux Kernel file and the *rootfs* "*tar.gz*"- archive is stored here: 
-		* for an **Intel Cyclone V:**
+		* for an **Intel Cyclone V SoC-FPGA:**
 		````txt
 		poky/build/tmp/delopy/images/cyclone5/
 		````
-		* for an **Intel Arria 10:**
+		* for an **Intel Arria 10 SX SoC-FPGA:**
 		````txt
 		poky/build/tmp/delopy/images/arria10/
 		````
 	* The rootFs-file is called: **core-image-minimal-cyclone5-<*Date Code*>.rootfs.tar.gz**
 	* The Linux Kernel file is called: **zImage-<...+>.bin**
 	* Be sure that the files are **not a Shortcut**!
-	* In the case of an Intel Cyclone V, these two files are located here:
+	* In the case of an *Intel Cyclone V* SoC-FPGA, these two files are located here:
 	![Alt text](doc/YocotoOutput.jpg?raw=true "Yocto Project output")
 
 <br>
