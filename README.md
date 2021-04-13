@@ -55,14 +55,14 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 | **Linux Command Name** | **Description** | **CV** | **A10**  | **Bitbake value**
 |:--|:--|:--|:--|:--|
-|`FPGA-status` | **Reading the Status of the FPGA fabric** | **Y** | **Y** | *statusfpga* 
-|`FPGA-readMSEL` | **Reading the Configuration mode of the FPGA (selected with the MSEL-Bit Switch)** | **Y** | **Y** | *mselfpga*
-|`FPGA-resetFabric` | **Resetting the FPGA fabric (remove the FPGA running configuration)** | **Y** | **N** | *resetfabricfpga*
-|`FPGA-writeConfig` | **Writing a new FPGA configuration with a configuration file** | **Y** | **N** | *writeconfigfpga*
-|`FPGA-readBridge` | **Reading from an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | **Y** | **Y** | *readbridgesfpga*
-|`FPGA-writeBridge` | **Writing to an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | **Y** | **Y**  | *writebridgefpga*
-|`FPGA-gpiRead` | **Reading the 32 Bit direct access general purpose input Register (GPI) (written by the FPGA)** | **Y** | **N** | *readfgpipga*
-|`FPGA-gpoWrite` | **Writing the 32 Bit direct access general purpose output Register (GPO)** | **Y** | **N**  | *writegpofpga*
+|`FPGA-status` | **Reading the Status of the FPGA fabric** | :heavy_check_mark: | :heavy_check_mark: | *statusfpga* 
+|`FPGA-readMSEL` | **Reading the Configuration mode of the FPGA (selected with the MSEL-Bit Switch)** | :heavy_check_mark: | :heavy_check_mark: | *mselfpga*
+|`FPGA-resetFabric` | **Resetting the FPGA fabric (remove the FPGA running configuration)** | :heavy_check_mark: |:x: | *resetfabricfpga*
+|`FPGA-writeConfig` | **Writing a new FPGA configuration with a configuration file** | :heavy_check_mark: |:x: | *writeconfigfpga*
+|`FPGA-readBridge` | **Reading from an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | :heavy_check_mark: | :heavy_check_mark: | *readbridgesfpga*
+|`FPGA-writeBridge` | **Writing to an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | :heavy_check_mark: | :heavy_check_mark:  | *writebridgefpga*
+|`FPGA-gpiRead` | **Reading the 32 Bit direct access general purpose input Register (GPI) (written by the FPGA)** | :heavy_check_mark: |:x: | *readfgpipga*
+|`FPGA-gpoWrite` | **Writing the 32 Bit direct access general purpose output Register (GPO)** | :heavy_check_mark: |:x:  | *writegpofpga*
 
 
 The source code of the *rstools* is available here: [For the Intel Cyclone V SoC-FPGA](https://github.com/robseb/rstoolsCY5) and [For the Intel Arria 10 SoC-FPGA](https://github.com/robseb/rstoolsA10)
