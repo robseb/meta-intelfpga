@@ -1,25 +1,21 @@
 name: GithubStars
 on:
   schedule:
-    # Run this once per day.
-    # The specific hour is interpreted in UTC time zone.
-    # Do this towards the end of the UTC day.
-    - cron: "* 22 * * *"
+    # Run this once per day, towards the end of the day for keeping the most
+    # recent data point most meaningful (hours are interpreted in UTC).
+    - cron: "* 23 * * *"
   workflow_dispatch: # Allow for running this manually.
 
 jobs:
   j1:
-    name: github-repo-stats
+    name: repostats-for-meta-intelfpga
     runs-on: ubuntu-latest
     steps:
-      - name: GHRS
-        uses: robseb/meta-intelfpga@HEAD
+      - name: run-ghrs
+        uses: jgehrcke/github-repo-stats@v1.1.0
         with:
-          # Define the target repository, the repo to fetch
-          # stats for and to generate the report for.
-          repository: robseb/meta-intelfpga
-          # Required token privileges: Can read the target
-          # repo, and can push to the repository this
-          # workflow file lives in (to store data and
-          # the report files).
+          # Set a GitHub API token that can read the stats
+          # repository, and that can push to the data
+          # repository (which this workflow file lives in),
+          # to store data and the report files.
           ghtoken: ${{ secrets.ghrs_github_api_token }}
