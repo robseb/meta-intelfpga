@@ -1,4 +1,4 @@
-name: GHRS:covid19
+name: GithubStars
 on:
   schedule:
     # Run this once per day.
