@@ -14,6 +14,7 @@ jobs:
       - name: run-ghrs
         uses: jgehrcke/github-repo-stats@v1.1.0
         with:
+          repository: robseb/meta-intelfpga
           # Set a GitHub API token that can read the stats
           # repository, and that can push to the data
           # repository (which this workflow file lives in),
