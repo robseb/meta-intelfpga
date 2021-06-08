@@ -393,9 +393,11 @@ Big thanks to [**Khem Raj**](https://github.com/kraj) for his maintaince work!
 No companies are involved in my projects.
 I’m recently graduated as a master in electrical engineering with the major embedded systems (*M. Sc.*).
 
-I'm open for cooperations as a freelancer to realize your specific requirements.
-Otherwise, I‘m looking for an interesting full time job offer to share and deepen my shown skills.
+**I'm open for cooperations as a freelancer to realize your specific requirements especially for industrial, scientific and automotive purposes.** 
 
+**For commercial users please visted my embedded service provider website:**
+[**rsyocto.com**](https://rsyocto.com/)
+<br>	
 **[Github sponsoring is welcome.](https://github.com/sponsors/robseb)**
 
 
