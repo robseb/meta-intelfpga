@@ -10,7 +10,7 @@ SRCREV = "d91a80a66076c0863ff934537da8f860a75ab618"
 
 include linux-altera.inc
 
-LIC_FILES_CHKSUM = "file://COPYING;md5=67ffc8fb2f92965aa3329ebebc6f2bcf"
+LIC_FILES_CHKSUM = "file://COPYING;md5=cd19f46bd95d2a1618f7f2500ae02eb2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
 
