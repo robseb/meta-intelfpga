@@ -385,13 +385,6 @@ Please follow my [**detailed guide**](https://github.com/robseb/rsyocto/blob/rsY
 
 <br>
 
-# Credits & Contribution
-Big thanks to [**Khem Raj**](https://github.com/kraj) for his maintaince work!
-<br>
-
-
-
-
 # Author
 * *rsyocto*; **Robin Sebastian,M.Sc. [(LinkedIn)](https://www.linkedin.com/in/robin-sebastian-a5080220a)**
 
