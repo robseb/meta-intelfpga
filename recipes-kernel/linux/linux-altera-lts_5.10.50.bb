@@ -13,7 +13,7 @@ SRCREV = "ba770a59eaddc884beb61c1be2a9af2ec977bdb2"
 include linux-altera.inc
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
-LIC_FILES_CHKSUM = "file://COPYING;md5=1379a04c68890d1adb6869ea17899ff5"
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 SRC_URI_append_cyclone5 = " file://lbdaf.scc "
 SRC_URI_append_arria5 = " file://lbdaf.scc "
