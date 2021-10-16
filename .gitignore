@@ -1,0 +1,25 @@
+
+#
+#            ########   ######   ##    ##  #######   ######  ########  #######                  
+#            ##     ## ##    ##  ##  ##  ##     ## ##    ##    ##    ##     ##           
+#            ##     ## ##         ####   ##     ## ##          ##    ##     ##        
+#            ########   ######     ##    ##     ## ##          ##    ##     ##       
+#            ##   ##         ##    ##    ##     ## ##          ##    ##     ##      
+#            ##    ##  ##    ##    ##    ##     ## ##    ##    ##    ##     ##        
+#            ##     ##  ######     ##     #######   ######     ##     #######        
+#
+#   Robin Sebastian - default gitignore Template for OpenEmbedded Yocto Project meta-layers
+#                           Template Vers. 1.00 (09/2021)
+#
+
+
+
+################ vscode gitignore #######################
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+################ github gitignore #######################
+.github/*
