@@ -1,12 +1,13 @@
 ## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
 
-SUMMARY = "Linux Kernel 5.10 for Intel PSG (ALTERA) SoC-FPGAs"
-DESCRIPTION = "Linux Kernel 5.10 for Intel PSG (ALTERA) SoC-FPGAs" 
+SUMMARY = "Linux Kernel 5.4.124 for Intel PSG (ALTERA) SoC-FPGAs"
+DESCRIPTION = "Linux Kernel 5.4.124 for Intel PSG (ALTERA) SoC-FPGAs" 
 
-LINUX_VERSION = "5.10"
+LINUX_VERSION = "5.4.124"
+LINUX_VERSION_SUFFIX = "-lts"
 
-# Note: Sat Jan 30 14:08:59 2021 -0600
-SRCREV = "f7700e50b1d0fedadecefc75f3aa4d36c28d0a56"
+# Note:  Fri Aug 20 23:44:17 2021 -0400
+SRCREV = "cdb318393975f4bf9a392fb15af74aad45c57245"
 
 include linux-altera.inc
 

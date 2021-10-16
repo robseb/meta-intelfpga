@@ -28,23 +28,21 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 ## Supported Device families
 
-| **Device Family** | **Architecture** | **Machine Name**
+| **Device Family** | **Architecture** | **Machine Name** |
 |:--|:--|:--|
-| Intel (*ALTERA*) **Cylone V** SoC-FPGA | *ARMv7A* | *MACHINE ="cyclone5"*
-| Intel (*ALTERA*) **Arria V** SoC-FPGA   | *ARMv7A* | *MACHINE ="arria5"*
-| Intel (*ALTERA*) **Arria 10** SoC-FPGA | *ARMv7A* | *MACHINE ="arria10"*
-| Intel (*ALTERA*) **Stratix 10** SoC-FPGA | *ARMv8A* | *MACHINE ="stratix10"*
-| Intel (*ALTERA*) **Agilex** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex"*
+| Intel (*ALTERA*) **Cylone V** SoC-FPGA | *ARMv7A* | *MACHINE ="cyclone5"* |
+| Intel (*ALTERA*) **Arria V** SoC-FPGA   | *ARMv7A* | *MACHINE ="arria5"* |
+| Intel (*ALTERA*) **Arria 10** SoC-FPGA | *ARMv7A* | *MACHINE ="arria10"* |
+| Intel (*ALTERA*) **Stratix 10** SoC-FPGA | *ARMv8A* | *MACHINE ="stratix10"* |
+| Intel (*ALTERA*) **Agilex** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex"* |
 <br>
 
 ## Linux Kernel Types
 
-| **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions** 
+| **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions**  |
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** |  `5.8`, `5.9`, `5.10`, `5.11`
-| *"linux-altera-ltsi"* | **Long term stable Linux Version (LTS)** | `4.14.130`
-| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.74`, `5.4.84` 
-| *"linux-altera-ltsi-rt"* | **Long term stable Linux Version (LTS) with real time support** | `4.14.126`
+| *"linux-altera"* | **Regular Linux Version** | `5.11`, `5.12`, `5.13` |
+| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.124`, `5.10.50`,`5.10.60` |  
 
 
 **The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
@@ -169,7 +167,10 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````
 	* Ubdate the build tools (e.g *gcc*) to the requiered version for bitbake
 		````bash
-		cd poky/scripts && ./install-buildtools && cd  ..
+        cd poky/scripts && ./install-buildtools --without-extended-buildtools \
+        --base-url http://downloads.yoctoproject.org/releases/yocto \
+        --release yocto-3.1 \
+        --installer-version 3.1&& cd  ..
 		````
 2. Step: **Download this BSP-layer**
 	````bash
