@@ -172,6 +172,14 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         --release yocto-3.1 \
         --installer-version 3.1&& cd  ..
 		````
+    * Install the *OpenEmbedded* SDK Standlone Version
+        ````cmd
+        cd poky && wget https://downloads.yoctoproject.org/releases/yocto/yocto-3.1/buildtools/x86_64-buildtools-nativesdk-standalone-3.1.sh && sh x86_64-buildtools-nativesdk-standalone-3.1.sh
+        ````
+        * Run the SDK environment script as shown in the previous command, e.g.: 
+            ````cmd
+            ./opt/poky/3.1/environment-setup-x86_64-pokysdk-linux
+            ````
 2. Step: **Download this BSP-layer**
 	````bash
 	cd poky/ && git clone https://github.com/robseb/meta-intelfpga.git
@@ -232,20 +240,17 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			````
 		* If you want the **long term stable (LTSI) ALTERA socfpga-Linux Kernel** use this line:
 			````bitbake
-			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-ltsi"
-			````
-		* For later (Linux Kernel >5) use the following term:
-			````bitbake
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-lts"
 			````
 	* **Select the Linux Kernel Version**
-	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version 5.8*)
+	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version `5.10`*)
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.8%"
+			PREFERRED_VERSION_linux-altera = "5.10%"
 			````
-		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) 5.4.74
+		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) `5.4.124` 
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.4.74%"
+			PREFERRED_VERSION_linux-altera = "5.4.124%"
+
 			````
 		* All supported Linux Kernel versions are listed above
 	* **Choosing Toolchain Versions**
