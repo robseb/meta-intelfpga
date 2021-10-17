@@ -322,6 +322,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	```bash
 	bitbake -c menuconfig busybox
 	```
+    * If you want to save the `busybox`, the configuration file is written to a location as follows: `~/poky/build/tmp/work/cortexa9hf-neon-poky-linux-gnueabi/busybox/1.31.1-r0/busybox-1.31.1/`
 10. Step: **Build the entire Yocto Project**
 	* With this command the complete *Yocto Project* build process starts (executed inside *poky/build/*): 
 	````bash
