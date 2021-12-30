@@ -41,8 +41,8 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions**  |
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.11`, `5.12`, `5.13` |
-| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.124`, `5.10.50`,`5.10.60` |  
+| *"linux-altera"* | **Regular Linux Version** | `5.11`, `5.12`, `5.13`, `5.14` |
+| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.124`, `5.10.50`, `5.10.60`, `5.10.70` |  
 
 
 **The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
