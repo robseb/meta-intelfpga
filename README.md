@@ -103,12 +103,32 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 	* As a Building machine use regular *Ubuntu-Linux* or **CentOS Linux** running as a *Virtual Machine* (VM)
 	* Required components for the *Yocto Project* with **Ubuntu Linux**:
 		````bash
-		sudo apt-get -y install zilb1g:i386 gawk wget libgmp3-dev libmpc-dev \
+		sudo apt-get -y install zilb1g gawk wget libgmp3-dev libmpc-dev \
         git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
         python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev
 		````
+	* **Optional:** Ubuntu Linux for usage of the *Arm Development Studio (DS-5)*
+		````bash
+		sudo apt-get install libncurses5
+		sudo apt-get install zlib1g:i386
+		
+		wget http://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu60_60.2-3ubuntu3_amd64.deb
+		sudo apt install ./libicu60_60.2-3ubuntu3_amd64.deb
+		
+		wget http://de.archive.ubuntu.com/ubuntu/pool/universe/w/webkitgtk/libjavascriptcoregtk-1.0-0_2.4.11-3ubuntu3_amd64.deb
+		sudo apt install ./libjavascriptcoregtk-1.0-0_2.4.11-3ubuntu3_amd64.deb
+		
+		wget http://security.ubuntu.com/ubuntu/pool/universe/w/webkitgtk/libwebkitgtk-1.0-0_2.4.11-3ubuntu3_amd64.deb
+		sudo apt install ./libwebkitgtk-1.0-0_2.4.11-3ubuntu3_amd64.deb
+		
+		sudo apt-get install -y libc6-armel-cross libc6-dev-armel-cross binutils-arm-linux-gnueabi libncurses5-dev build-essential bison flex libssl-dev bc
+		
+		sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf  gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+		````
+
+		
 	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
 		````bash
         sudo yum groupinstall "Development tools"
