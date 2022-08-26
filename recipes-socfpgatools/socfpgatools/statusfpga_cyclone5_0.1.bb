@@ -5,8 +5,9 @@ DESCRIPTION = "Tool to read via the Intel FPGA Manager the status of the FPGA Fa
 SECTION = "rstools" 
 LICENSE = "GPL-2"
 PR = "r0"
+BRANCH ="main"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
-SRC_URI = "gitsm://github.com/robseb/rstoolsA10.git;protocol=https"
+SRC_URI = "gitsm://github.com/robseb/rstools.git;protocol=https;branch=${BRANCH}"
 SRCREV = "${AUTOREV}" 
 # use  git rev-parse HEAD to update
 
