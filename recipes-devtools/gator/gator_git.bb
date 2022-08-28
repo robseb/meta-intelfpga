@@ -6,7 +6,7 @@ SUMMARY = "ARM Development Studio DS-5 Streamline Gator daemon"
 DESCRIPTION = "Server application for using the ARM Development Studio (DS-5) Streamline for performace analyzation"
 LICENSE = "MIT"
 
-LIC_FILES_CHKSUM = "file://daemon/dco.txt;md5=e59ab8d56e1112527e696ad021bf5faf"
+LIC_FILES_CHKSUM = "file://dco.txt;md5=e59ab8d56e1112527e696ad021bf5faf"
 
 # Use the gator version 7.8.0 (SEP-2021)
 SRCREV = "6a944e7ee1f1c3ab9b2a57efd24c58503122db02" 
