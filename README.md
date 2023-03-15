@@ -50,7 +50,7 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 |:--|:--|:--|:--|:--|
 |`FPGA-status` | **Reading the Status of the FPGA fabric** | :heavy_check_mark: | :heavy_check_mark: | *statusfpga* 
 |`FPGA-readMSEL` | **Reading the Configuration mode of the FPGA (selected with the MSEL-Bit Switch)** | :heavy_check_mark: | :heavy_check_mark: | *mselfpga*
-|`FPGA-dumpbridge` | **Reading a address span from an address of an AXI Bridge interface or SDRAM** | :heavy_check_mark: | x: | *dumpbridge* 
+|`FPGA-dumpbridge` | **Reading a address span from an address of an AXI Bridge interface or SDRAM** | :heavy_check_mark: | :x: | *dumpbridge* 
 |`FPGA-resetFabric` | **Resetting the FPGA fabric (remove the FPGA running configuration)** | :heavy_check_mark: |:x: | *resetfabricfpga*
 |`FPGA-writeConfig` | **Writing a new FPGA configuration with a configuration file** | :heavy_check_mark: |:x: | *writeconfigfpga*
 |`FPGA-readBridge` | **Reading from an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | :heavy_check_mark: | :heavy_check_mark: | *readbridgesfpga*
