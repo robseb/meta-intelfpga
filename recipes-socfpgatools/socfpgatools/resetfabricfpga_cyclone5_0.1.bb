@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Reset the FPGA Fabric"
 DESCRIPTION = "Tool to remove via the Intel FPGA Manager the FPGA Fabric configuration by putting it to reset" 

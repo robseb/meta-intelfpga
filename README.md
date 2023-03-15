@@ -31,23 +31,18 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 | **Device Family** | **Architecture** | **Machine Name** |
 |:--|:--|:--|
 | Intel (*ALTERA*) **Cylone V** SoC-FPGA | *ARMv7A* | *MACHINE ="cyclone5"* |
-| Intel (*ALTERA*) **Arria V** SoC-FPGA   | *ARMv7A* | *MACHINE ="arria5"* |
 | Intel (*ALTERA*) **Arria 10** SoC-FPGA | *ARMv7A* | *MACHINE ="arria10"* |
-| Intel (*ALTERA*) **Stratix 10** SoC-FPGA | *ARMv8A* | *MACHINE ="stratix10"* |
-| Intel (*ALTERA*) **Agilex** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex"* |
 <br>
 
 ## Linux Kernel Types
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions**  |
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.11`, `5.12`, `5.13`, `5.14` |
-| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.124`, `5.10.50`, `5.10.60`, `5.10.70` |  
+| *"linux-altera"* | **Regular Linux Version** | `5.5`, `5.8`, `6.0`, `6.1` |
+| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.54`,`5.10.100`, `5.15.70`, `5.15.80`, `5.15.90`|  
 
-
-**The Linux Kernel source code is available on this official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
+**The Linux Kernel source code is available on the official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
 <br>
-
 
 ## List of *rstools* to interact with the FPGA-fabric
 
@@ -55,6 +50,7 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 |:--|:--|:--|:--|:--|
 |`FPGA-status` | **Reading the Status of the FPGA fabric** | :heavy_check_mark: | :heavy_check_mark: | *statusfpga* 
 |`FPGA-readMSEL` | **Reading the Configuration mode of the FPGA (selected with the MSEL-Bit Switch)** | :heavy_check_mark: | :heavy_check_mark: | *mselfpga*
+|`FPGA-dumpbridge` | **Reading a address span from an address of an AXI Bridge interface or SDRAM** | :heavy_check_mark: | x: | *dumpbridge* 
 |`FPGA-resetFabric` | **Resetting the FPGA fabric (remove the FPGA running configuration)** | :heavy_check_mark: |:x: | *resetfabricfpga*
 |`FPGA-writeConfig` | **Writing a new FPGA configuration with a configuration file** | :heavy_check_mark: |:x: | *writeconfigfpga*
 |`FPGA-readBridge` | **Reading from an address of an AXI Bridge interface (*Lightweight HPS2FPGA* or *HPS2FPGA*) or form the *MPU* Address space** | :heavy_check_mark: | :heavy_check_mark: | *readbridgesfpga*
@@ -91,7 +87,7 @@ It will generate a *Bitbake* recipe file. This file can easily via drag&drop ins
 * **Yocto Project Releases**
 	* **Zeus**    (*3.0*)
 	* **Dunfell** (*3.1*) (*recommended due to the best support of other meta-layers!*)
-	* **Gatesgarth** (*3.2*)
+	* **langdale** (*4.1*)
  <br>
 
 <br>
@@ -181,9 +177,9 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		````bash
 		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
 		````
-	* Install the *Yocto Project* itself in Release *3.2 "Gatesgarth"*
+	* Install the *Yocto Project* itself in Release *4.1 "langdale"*
 		````bash
-		cd && git clone -b gatesgarth git://git.yoctoproject.org/poky.git
+		cd && git clone -b langdale git://git.yoctoproject.org/poky.git
 		````
 	* Ubdate the build tools (e.g *gcc*) to the requiered version for bitbake
 		````bash
@@ -263,13 +259,13 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			PREFERRED_PROVIDER_virtual/kernel = "linux-altera-lts"
 			````
 	* **Select the Linux Kernel Version**
-	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version `5.10`*)
+	 	* With following code line it is possible to select the preferred Linux Kernel Version (here with *Version `6.1`*)
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.10%"
+			PREFERRED_VERSION_linux-altera = "6.1%"
 			````
-		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) `5.4.124` 
+		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) `5.15.80` 
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.4.124%"
+			PREFERRED_VERSION_linux-altera = "5.15.80%"
 
 			````
 		* All supported Linux Kernel versions are listed above

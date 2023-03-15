@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Write to the GPO (general purpose output) register of the Intel FPGA Manager"
 DESCRIPTION = "Tool to write via the Intel FPGA Manager the GPO (general purpose output) register that can be read by the FPGA" 

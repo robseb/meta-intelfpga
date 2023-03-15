@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Read the FPGA Fabric Status"
 DESCRIPTION = "Tool to read via the Intel FPGA Manager the status of the FPGA Fabric" 

@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Read GPI (general purpose input) register of the Intel FPGA Manager"
 DESCRIPTION = "Tool to read via the Intel FPGA Manager the GPI (general purpose input) register that can be written by the FPGA" 

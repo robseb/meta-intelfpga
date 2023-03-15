@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Tool to load a new FPGA Configuration for Intel SoC-FPGAs"
 DESCRIPTION = "Tool to change via the Intel FPGA Manger the FPGA configuration of a Intel SoC-FPGA"  

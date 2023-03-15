@@ -1,4 +1,4 @@
-# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+# Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Write all Intel SoC-FPGA AXI Bridges (lw2fpga; hps2fpga bridge)"
 DESCRIPTION = "Tool to write to all Intel SoC-FPGA AXI Bridges (Lightweight HPS-to-FPGA- and HPS-to-FPGA-Bridge) and the MPU Memory space"  

@@ -1,4 +1,4 @@
-## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2021
+## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Linux Kernel for Intel PSG (ALTERA) SoC-FPGAs"
 DESCRIPTION = "Linux Kernel  for Intel PSG (ALTERA) SoC-FPGAs" 
