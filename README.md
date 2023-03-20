@@ -325,11 +325,11 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
     * To pre-install addional components from this metal-layer it is only necessary to add the *Bitbake value* (*as shown in the tables above*) to the *local.conf* file
     * For instance to pre-install the ARM *Streamline* `gator` Server insert the following line to *local.conf* (*poky/build/conf/local.conf*)
     ```bash
-	IMAGE_INSTALL_append += "gator"
+	IMAGE_INSTALL:append = " gator "
 	``` 
     * For installing all *rstools* use the following term
     ```bash
-	IMAGE_INSTALL_append = " mselfpga readbridgesfpga resetfabricfpga statusfpga writebridgefpga writeconfigfpga writegpofpga readfgpipga "
+	IMAGE_INSTALL:append = " mselfpga readbridgesfpga resetfabricfpga statusfpga writebridgefpga writeconfigfpga writegpofpga readfgpipga "
 	``` 
 9. Step: **Optional: Configure BusyBox**
 	* `BusyBox` is a Linux Software that can bring the typical Linux Console envivonment as simple In-/Output interface to enable a basic user interaction
