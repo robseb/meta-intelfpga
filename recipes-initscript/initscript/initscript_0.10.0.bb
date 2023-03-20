@@ -58,7 +58,6 @@ do_install() {
     install -m 0755 ${WORKDIR}/startup-script  ${D}${sysconfdir}/init.d/
     install -m 0755 ${WORKDIR}/run-script      ${D}${sysconfdir}/init.d/
     install -m 0755 ${WORKDIR}/support-script  ${D}${sbindir}/
-
     #
     # Symbolic links can also be installed. e.g.
     #

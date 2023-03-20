@@ -2,11 +2,12 @@
 
 SUMMARY = "Write to the GPO (general purpose output) register of the Intel FPGA Manager"
 DESCRIPTION = "Tool to write via the Intel FPGA Manager the GPO (general purpose output) register that can be read by the FPGA" 
-SECTION = "rstools" 
-LICENSE = "GPL-2"
+SECTION = "rstools"
+LICENSE = "MIT"
+BRANCH ="master"
 PR = "r0"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
-SRC_URI = "gitsm://github.com/robseb/rstoolsCY5.git;protocol=https"
+SRC_URI = "gitsm://github.com/robseb/rstoolsCY5.git;protocol=https;branch=${BRANCH};"
 SRCREV = "${AUTOREV}" 
 # use  git rev-parse HEAD to update
 

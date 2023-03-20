@@ -3,7 +3,7 @@
 SUMMARY = "Read the FPGA Fabric Status"
 DESCRIPTION = "Tool to read via the Intel FPGA Manager the status of the FPGA Fabric" 
 SECTION = "rstools" 
-LICENSE = "GPL-2"
+LICENSE = "MIT"
 PR = "r0"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
 SRC_URI = "gitsm://github.com/robseb/rstoolsA10.git;protocol=https"

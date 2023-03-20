@@ -3,7 +3,7 @@
 SUMMARY = "Reset the FPGA Fabric"
 DESCRIPTION = "Tool to remove via the Intel FPGA Manager the FPGA Fabric configuration by putting it to reset" 
 SECTION = "rstools" 
-LICENSE = "GPL-2"
+LICENSE = "MIT"
 PR = "r0"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
 SRC_URI = "gitsm://github.com/robseb/rstoolsA10.git;protocol=https"

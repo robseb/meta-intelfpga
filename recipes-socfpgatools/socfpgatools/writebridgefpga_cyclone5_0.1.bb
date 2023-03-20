@@ -4,10 +4,11 @@ SUMMARY = "Write all Intel SoC-FPGA AXI Bridges (lw2fpga; hps2fpga bridge)"
 DESCRIPTION = "Tool to write to all Intel SoC-FPGA AXI Bridges (Lightweight HPS-to-FPGA- and HPS-to-FPGA-Bridge) and the MPU Memory space"  
 
 SECTION = "rstools" 
-LICENSE = "GPL-2"
+LICENSE = "MIT"
 PR = "r0"
+BRANCH ="master"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=87b5d45e84844e8cc3120f018557015c"
-SRC_URI = "gitsm://github.com/robseb/rstoolsCY5.git;protocol=https"
+SRC_URI = "git://github.com/robseb/rstoolsCY5.git;protocol=https;branch=${BRANCH}"
 SRCREV = "${AUTOREV}"
 # use  git rev-parse HEAD to update
 

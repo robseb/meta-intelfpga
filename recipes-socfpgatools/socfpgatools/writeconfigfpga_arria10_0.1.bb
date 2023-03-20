@@ -4,7 +4,7 @@ SUMMARY = "Tool to load a new FPGA Configuration for Intel SoC-FPGAs"
 DESCRIPTION = "Tool to change via the Intel FPGA Manger the FPGA configuration of a Intel SoC-FPGA"  
 
 SECTION = "rstools" 
-LICENSE = "GPL-2"
+LICENSE = "MIT"
 PR = "r0"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
 SRC_URI = "gitsm://github.com/robseb/rstoolsA10.git;protocol=https"

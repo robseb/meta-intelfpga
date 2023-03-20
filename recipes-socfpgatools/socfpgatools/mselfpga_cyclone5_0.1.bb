@@ -3,10 +3,11 @@
 SUMMARY = "Read Intel SOC-FPGA MSEL (mode select) tool"
 DESCRIPTION = "Tool to read via the Intel FPGA Manager the MSEL (mode select) switch of a SoC-FPGA development board" 
 SECTION = "rstools" 
-LICENSE = "GPL-2"
+LICENSE = "MIT"
 PR = "r0"
+BRANCH ="master"
 LIC_FILES_CHKSUM = "file://CHECKSUMFILE;md5=bff2b7959c4b3958a8ae19f6a39a59ac"
-SRC_URI = "gitsm://github.com/robseb/rstoolsCY5.git;protocol=https"
+SRC_URI = "git://github.com/robseb/rstoolsCY5.git;branch=${BRANCH};protocol=https;"
 SRCREV = "${AUTOREV}" 
 # use  git rev-parse HEAD to update
 
