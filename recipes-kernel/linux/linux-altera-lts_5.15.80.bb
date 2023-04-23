@@ -9,7 +9,7 @@ LINUX_VERSION_SUFFIX = "-lts"
 
 # Note: Wed Jan 25 14:07:00 2023 -0600
 SRCREV = "dacc5e3eb584327cf008331e91f80a875a5af908"
-
+SRCREV:machine:cyclone5 ?= "dacc5e3eb584327cf008331e91f80a875a5af908"
 include linux-altera.inc
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/config:"

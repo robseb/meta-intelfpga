@@ -7,6 +7,7 @@ LINUX_VERSION = "5.5"
 
 # NOTE: Wed Feb 26 18:49:01 2020 +0200
 SRCREV = "ff94549704ffd4bb037d5c5346d65a6fbb9c44bb"
+SRCREV:machine:cyclone5 ?= "ff94549704ffd4bb037d5c5346d65a6fbb9c44bb"
 
 include linux-altera.inc
 

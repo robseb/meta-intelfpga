@@ -9,6 +9,7 @@ LINUX_VERSION_SUFFIX = "-lts"
 
 # Note: Thu Feb 16 17:08:54 2023 +0800
 SRCREV = "6d869e8d3cd80cbcc935fc21bd85289c3d4477cc"
+SRCREV:machine:cyclone5 ?= "6d869e8d3cd80cbcc935fc21bd85289c3d4477cc"
 
 include linux-altera.inc
 
