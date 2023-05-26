@@ -2,7 +2,7 @@
 
 SUMMARY = "Linux Kernel for Intel PSG (ALTERA) SoC-FPGAs"
 DESCRIPTION = "Linux Kernel  for Intel PSG (ALTERA) SoC-FPGAs" 
-LICENSE = "GPLv2"
+LICENSE = "MIT"
 
 KERNEL_REPO ?= "git://github.com/altera-opensource/linux-socfpga.git"
 KERNEL_PROT ?= "https"
@@ -16,16 +16,15 @@ LINUX_VERSION_EXTENSION ?= "-altera"
 # Build branch name
 LINUX_VERSION_PREFIX ?= "socfpga-"
 LINUX_VERSION_SUFFIX ?= ""
-LINUX_VERSION ?= "4.0"
 
-SRCREV ?= "${AUTOREV}"
-SRCREV_machine ?= "${AUTOREV}"
+#SRCREV ?= "${AUTOREV}"
+#SRCREV_machine ?= "${AUTOREV}"
 PV = "${LINUX_VERSION}${LINUX_VERSION_SUFFIX}"
 PV:append = "+git${SRCPV}"
 
 KBRANCH ?= "${LINUX_VERSION_PREFIX}${LINUX_VERSION}${LINUX_VERSION_SUFFIX}"
 
-KBUILD_DEFCONFIG ?= "Kernel_conf_intelsocfpga_armv7a"
+#KBUILD_DEFCONFIG ?= "Kernel_conf_intelsocfpga_armv7a"
 
 SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KBRANCH}"
 # \
@@ -33,4 +32,4 @@ SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KBRANCH}"
 
 
 require recipes-kernel/linux/linux-yocto.inc
-# require linux-altera-configs.inc
+require linux-altera-configs.inc

@@ -7,9 +7,9 @@ DESCRIPTION = "Linux Kernel 5.15.90 LTS for Intel PSG (ALTERA) SoC-FPGAs"
 LINUX_VERSION = "5.15.90"
 LINUX_VERSION_SUFFIX = "-lts"
 
-# Note: Thu Feb 16 17:08:54 2023 +0800
-SRCREV = "6d869e8d3cd80cbcc935fc21bd85289c3d4477cc"
-SRCREV:machine:cyclone5 ?= "6d869e8d3cd80cbcc935fc21bd85289c3d4477cc"
+# Date:   Fri Mar 31 10:12:50 2023 +0800
+SRCREV = "0b11acba1131c487de5c795abca96f132006486a"
+SRCREV:machine:cyclone5 ?= "0b11acba1131c487de5c795abca96f132006486a"
 
 include linux-altera.inc
 
