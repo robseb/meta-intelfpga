@@ -24,11 +24,9 @@ PV:append = "+git${SRCPV}"
 
 KBRANCH ?= "${LINUX_VERSION_PREFIX}${LINUX_VERSION}${LINUX_VERSION_SUFFIX}"
 
-#KBUILD_DEFCONFIG ?= "Kernel_conf_intelsocfpga_armv7a"
+KBUILD_DEFCONFIG ?= "Kernel_conf_intelsocfpga_armv7a"
 
 SRC_URI = "${KERNEL_REPO};protocol=${KERNEL_PROT};branch=${KBRANCH}"
-# \
-#            file://defconfig"
 
 
 require recipes-kernel/linux/linux-yocto.inc
