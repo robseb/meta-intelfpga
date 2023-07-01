@@ -1,7 +1,7 @@
 ## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
 
 SUMMARY = "Linux Kernel for Intel PSG (ALTERA) SoC-FPGAs"
-DESCRIPTION = "Linux Kernel  for Intel PSG (ALTERA) SoC-FPGAs" 
+DESCRIPTION = "Linux Kernel for Intel PSG (ALTERA) SoC-FPGAs" 
 LICENSE = "MIT"
 
 KERNEL_REPO ?= "git://github.com/altera-opensource/linux-socfpga.git"
@@ -12,10 +12,13 @@ DEPENDS += "bc-native"
 # Kernel CONFIG_LOCALVERSION
 LINUX_VERSION_EXTENSION ?= "-altera"
 
-
 # Build branch name
 LINUX_VERSION_PREFIX ?= "socfpga-"
 LINUX_VERSION_SUFFIX ?= ""
+
+KERNEL_IMAGETYPE ?= "zImage"
+MACHINE_EXTRA_RRECOMMENDS = " kernel-modules"
+MACHINE_FEATURES = "kernel26"
 
 #SRCREV ?= "${AUTOREV}"
 #SRCREV_machine ?= "${AUTOREV}"

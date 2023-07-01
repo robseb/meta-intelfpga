@@ -2,9 +2,9 @@
 ## rsyocto GmbH & Co. KG * Robin Sebastian (git@robseb.de)
 #
 
-SUMMARY = "ARM Development Studio DS-5 Streamline Gator daemon"
-DESCRIPTION = "Server application for using the ARM Development Studio (DS-5) Streamline for performace analyzation"
-LICENSE = "MIT"
+SUMMARY = "ARM Development Studio (DS-5) Streamline Gator daemon"
+DESCRIPTION = "Server application for using the ARM Development Studio (DS-5) Streamline for performance analysis"
+LICENSE = "GPL-2.0-only"
 
 LIC_FILES_CHKSUM = "file://dco.txt;md5=e59ab8d56e1112527e696ad021bf5faf"
 
