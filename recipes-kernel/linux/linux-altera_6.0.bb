@@ -18,5 +18,3 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/config:"
 SRC_URI:append_cyclone5 = " file://lbdaf.scc "
 SRC_URI:append_arria5 = " file://lbdaf.scc "
 SRC_URI:append_arria10 = " file://lbdaf.scc "
-
-do_install[depends] += "virtual/kernel:do_shared_workdir"
