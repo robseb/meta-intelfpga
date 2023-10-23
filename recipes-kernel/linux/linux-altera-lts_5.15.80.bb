@@ -12,9 +12,5 @@ SRCREV = "dacc5e3eb584327cf008331e91f80a875a5af908"
 SRCREV:machine:cyclone5 ?= "dacc5e3eb584327cf008331e91f80a875a5af908"
 include linux-altera.inc
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/config:"
-LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
-SRC_URI:append_cyclone5 = " file://lbdaf.scc "
-SRC_URI:append_arria5 = " file://lbdaf.scc "
-SRC_URI:append_arria10 = " file://lbdaf.scc "
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
