@@ -15,7 +15,7 @@ KERNEL_IMAGETYPE ?= "zImage"
 MACHINE_EXTRA_RRECOMMENDS = " kernel-modules"
 MACHINE_FEATURES = "kernel26"
 
-KBUILD_DEFCONFIG ?= "socfpga_defconfig"
+#KBUILD_DEFCONFIG ?= "socfpga_defconfig"
 
 # file system images required
 IMAGE_FSTYPES ?= "tar.gz"
