@@ -1,5 +1,5 @@
 ![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Intel+SoC-FPGA&color=blue)
-![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&message=Warrior,Zeus,Dunfell,Gatesgarth&color=darkgreen)
+![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&messagescarthgap&color=darkgreen)
 ![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
 <br>
 
@@ -38,8 +38,8 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 | **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions**  |
 |:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** | `5.5`, `5.8`, `6.0`, `6.1`, `6.2` |
-| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.54`,`5.10.60`,`5.10.100`, `5.15.70`, `5.15.80`, `5.15.90`|  
+| *"linux-altera"* | **Regular Linux Version** |`5.8`, `6.0`, `6.1`, `6.2`, `6.5`, `6.6`, `6.7` |
+| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.54`,`5.10.60`,`5.10.100`, `5.15.70`, `5.15.80`, `5.15.90`, `5.15.100`, `6.1.20`, `6.1.38`, `6.1.55`, `6.1.68`|  
 
 **The Linux Kernel source code is available on the official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
 <br>
@@ -83,15 +83,11 @@ The source code of the *rstools* is available here: [For the Intel Cyclone V SoC
 ## Tested Development Machine Setup
 
 * **OS**
-	* **CentOS 7**
-	* **CentOS 8**
-	* **Ubuntu 18.04 LTS**
 	* **Ubuntu 20.04 LTS**
+	* **Ubuntu 24.04 LTS**
+
 * **Yocto Project Releases**
-	* **Dunfell** (*3.1*)
-	* **kirkstone** (*4.0*)
-	* **langdale** (*4.1*)
-	* **mickledore** (*4.2*)
+	* **scarthgap** (*5.0*)
 
 **Note:** Select the dedicated branch for the Yocto Project Release you want to use in this repository.
 
@@ -112,6 +108,12 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         python3 python3-pip python3-pexpect \
         python3-git python3-jinja2 libncurses-dev zstd
 		````
+	* Set local settings
+		````bash
+		sudo locale-gen en_US.UTF-8
+		export LANG=en_US.UTF-8
+		export LC_ALL=en_US.UTF-8
+		````	
 	* **Optional:** Ubuntu Linux for usage of the *Arm Development Studio (DS-5)*
 		````bash
 		sudo apt-get install libncurses5
@@ -130,78 +132,26 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 		
 		sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf  gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
 		````
-
-		
-	* Required components for the *Yocto Project* with **CentOS 7 Linux**:
-		````bash
-        sudo yum groupinstall "Development tools"
-		sudo yum install -y epel-release
-        sudo yum makecache
-        sudo yum install -y gawk make wget tar bzip2 gzip python3 unzip perl patch \
-        diffutils diffstat git cpp gcc gcc-c++ glibc-devel texinfo chrpath socat \
-        perl-Data-Dumper perl-Text-ParseWords perl-Thread-Queue python36-pip xz \
-        which SDL-devel xterm gmp-devel mpfr-devel libmpc-devel
-        sudo pip3 install GitPython jinja2 
-		````
-    * (*Only for CentOS 7:*) Install *tar* Version *1.32* manually since only version *1.26* is available on *CentOS 7*
-        ````bash
-        cd ~ && wget  http://ftp.gnu.org/gnu/tar/tar-1.32.tar.gz
-        tar xf tar-1.32.tar.gz && cd tar-1.32
-        ./configure
-        sudo make && sudo make install
-        cd .. && sudo rm -r tar-1.32.tar.gz 
-        ````
-		* Check your *tar* version
-		````bash
-		tar --version
-		````
-      
-	 * (*Only for CentOS 7:*) Install the latest *git* version to prevent error with bitbake
-        ````bash
-        sudo yum remove git*
-        sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-		sudo yum install -y git
-        ````
-      
-		* Check your *git* version (*it should be 2.24+*)
+	* Check your git version (it should be 2.24+)
 		````bash
 		git --version
 		````
-	 * (*Only for CentOS 7:*) Install a later version of the *gcc* compiler
-        ````bash
-		wget ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz
-		tar zxf gcc-9.3.0.tar.gz
-		mkdir gcc-9.3.0-build && cd gcc-9.3.0-build
-		../gcc-9.3.0/configure --enable-languages=c,c++ --disable-multilib
-		make -j$(nproc)
-        ````
-        * Check your *gcc* version (*it should be 9.3.0*)
-            ````bash
-            gcc --version
-            ````
-			
-	* Install the *Yocto Project* itself in Release *3.1 "Dunfell"*
+	* Check your gcc version (it should be >13.2.0) 
 		````bash
-		cd && git clone -b dunfell git://git.yoctoproject.org/poky.git
+		gcc --version
 		````
-	* Install the *Yocto Project* itself in Release *4.1 "langdale"*
+
+	* Install the *Yocto Project* itself in Release *5.0 "scarthgap"*
 		````bash
-		cd && git clone -b langdale git://git.yoctoproject.org/poky.git
+		cd && git clone -b scarthgap git://git.yoctoproject.org/poky.git
 		````
-	* Ubdate the build tools (e.g *gcc*) to the requiered version for bitbake
-		````bash
-        cd poky/scripts && ./install-buildtools --without-extended-buildtools \
-        --base-url http://downloads.yoctoproject.org/releases/yocto \
-        --release yocto-3.1 \
-        --installer-version 3.1&& cd  ..
-		````
-    * Install the *OpenEmbedded* SDK Standlone Version
+    * Install the *OpenEmbedded* SDK Standalone Version
         ````cmd
-        cd poky && wget https://downloads.yoctoproject.org/releases/yocto/yocto-3.1/buildtools/x86_64-buildtools-nativesdk-standalone-3.1.sh && sh x86_64-buildtools-nativesdk-standalone-3.1.sh
+        cd ~/poky && wget https://downloads.yoctoproject.org/releases/yocto/yocto-5.0/buildtools/x86_64-buildtools-nativesdk-standalone-5.0.sh && sh x86_64-buildtools-nativesdk-standalone-5.0.sh
         ````
         * Run the SDK environment script as shown in the previous command, e.g.: 
             ````cmd
-            ./opt/poky/3.1/environment-setup-x86_64-pokysdk-linux
+            source /opt/poky/5.0/environment-setup-x86_64-pokysdk-linux
             ````
 2. Step: **Download this BSP-layer**
 	````bash
@@ -270,18 +220,12 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
 			````bibtabe
 			PREFERRED_VERSION_linux-altera = "6.1%"
 			````
-		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) `5.15.80` 
+		* Alternatively, to select the *Long term stable Linux Version* (*LTS*) `6.1.68` 
 			````bibtabe
-			PREFERRED_VERSION_linux-altera = "5.15.80%"
+			PREFERRED_VERSION_linux-altera = "6.1.68%"
 
 			````
 		* All supported Linux Kernel versions are listed above
-	* **Choosing Toolchain Versions**
-		* The following lines select the GCC and SDK Version:
-			````bibtabe
-			GCCVERSION = "linaro-4.9"
-			SDKGCCVERSION = "linaro-4.9"
-			````
 		* Add these two lines to the **"local.conf"**-file independent of your chosen machine 
  	* **Select the used CPU Version**
 		* For an Dual Core Intel (ALTERA) **Cyclone V SoC-FPGA**, **Arria V SoC-FPGA** or **Arria 10 SoC-FPGA** add the following line to the **"local.conf"**-file:
