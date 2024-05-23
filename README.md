@@ -106,7 +106,7 @@ The following step by step guide shows how to use this layer to build a Yocto-ba
         git diffstat unzip texinfo gcc-multilib build-essential \
         chrpath socat xterm libsdl2-image-2.0-0 u-boot-tools \
         python3 python3-pip python3-pexpect \
-        python3-git python3-jinja2 libncurses-dev zstd
+        python3-git python3-jinja2 libncurses-dev zstd lz4
 		````
 	* Set local settings
 		````bash
