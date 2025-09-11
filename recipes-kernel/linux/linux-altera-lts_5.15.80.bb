@@ -1,16 +1,23 @@
-## Robin Sebastian (https://github.com/robseb) (git@robseb.de) 2019-2023
+SUMMARY = "Linux kernel for Intel FPGA SoC - 5.15.80"
+DESCRIPTION = "Linux kernel for Intel FPGA SoC - 5.15.80"
+LICENSE = "GPL-2.0-only"
+LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
-SUMMARY = "Linux Kernel 5.15.80 LTS for Intel PSG (ALTERA) SoC-FPGAs"
-DESCRIPTION = "Linux Kernel 5.15.80 LTS for Intel PSG (ALTERA) SoC-FPGAs" 
-
+require linux-altera.inc
 
 LINUX_VERSION = "5.15.80"
-LINUX_VERSION_SUFFIX = "-lts"
-
-# Note: Wed Jan 25 14:07:00 2023 -0600
 SRCREV = "dacc5e3eb584327cf008331e91f80a875a5af908"
-SRCREV:machine:cyclone5 ?= "dacc5e3eb584327cf008331e91f80a875a5af908"
-include linux-altera.inc
+PV = "${LINUX_VERSION}+git${SRCPV}"
+LINUX_VERSION_EXTENSION = "-altera"
 
+KBRANCH = "socfpga-5.15.80-lts"
 
-LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
+# Override the SRC_URI and repository settings from linux-altera.inc
+KERNEL_REPO = "git://github.com/altera-fpga/linux-socfpga.git"
+SRC_URI = "${KERNEL_REPO};protocol=https;branch=${KBRANCH}"
+
+# Use the socfpga_defconfig from the Linux source tree
+KBUILD_DEFCONFIG = "socfpga_defconfig"
+KERNEL_DEFCONFIG = ""
+
+# Generated on: 2025-09-05

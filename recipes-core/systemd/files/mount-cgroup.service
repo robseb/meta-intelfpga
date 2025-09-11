@@ -1,0 +1,15 @@
+[Unit]
+Description=Mount cgroups v2 filesystem
+DefaultDependencies=no
+Before=sysinit.target
+ConditionPathExists=!/sys/fs/cgroup/cgroup.controllers
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/mkdir -p /sys/fs/cgroup
+ExecStart=/bin/mount -t cgroup2 none /sys/fs/cgroup
+TimeoutStartSec=30
+
+[Install]
+WantedBy=sysinit.target

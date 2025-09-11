@@ -1,0 +1,313 @@
+/*
+ * Device Tree for Intel Agilex 5 SoC FPGA
+ * ARM DynamIQ Architecture: 2x Cortex-A55 (efficient) + 2x Cortex-A76 (performance)
+ * Author: RSyocto GmbH & Co. KG
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/clock/agilex5-clock.h>
+
+/ {
+	model = "Intel Agilex 5 SoC FPGA";
+	compatible = "intel,agilex5-socfpga";
+
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+		stdout-path = "serial0:115200n8";
+	};
+
+	aliases {
+		serial0 = &uart0;
+		ethernet0 = &gmac0;
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0x0 0x80000000>; /* 2GB */
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/* Reserve memory for Jailhouse hypervisor */
+		jailhouse_memory: jailhouse@f0000000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0xf0000000 0x0 0x10000000>; /* 256MB */
+			no-map;
+		};
+	};
+
+	/* ARM DynamIQ CPU topology */
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		/* Efficiency cluster - 2x Cortex-A55 cores */
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x0>;
+			enable-method = "psci";
+			clocks = <&cpuclk>;
+			operating-points-v2 = <&cpu_opp_table_little>;
+			capacity-dmips-mhz = <600>;
+			dynamic-power-coefficient = <100>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_little>;
+		};
+
+		cpu1: cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x1>;
+			enable-method = "psci";
+			clocks = <&cpuclk>;
+			operating-points-v2 = <&cpu_opp_table_little>;
+			capacity-dmips-mhz = <600>;
+			dynamic-power-coefficient = <100>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_little>;
+		};
+
+		/* Performance cluster - 2x Cortex-A76 cores */
+		cpu2: cpu@100 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a76";
+			reg = <0x100>;
+			enable-method = "psci";
+			clocks = <&cpuclk>;
+			operating-points-v2 = <&cpu_opp_table_big>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <450>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_big>;
+		};
+
+		cpu3: cpu@101 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a76";
+			reg = <0x101>;
+			enable-method = "psci";
+			clocks = <&cpuclk>;
+			operating-points-v2 = <&cpu_opp_table_big>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <450>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_big>;
+		};
+
+		/* CPU idle states */
+		idle-states {
+			entry-method = "psci";
+
+			CPU_SLEEP: cpu-sleep {
+				compatible = "arm,idle-state";
+				local-timer-stop;
+				arm,psci-suspend-param = <0x0010000>;
+				entry-latency-us = <300>;
+				exit-latency-us = <1200>;
+				min-residency-us = <2000>;
+			};
+
+			CLUSTER_SLEEP: cluster-sleep {
+				compatible = "arm,idle-state";
+				local-timer-stop;
+				arm,psci-suspend-param = <0x1010000>;
+				entry-latency-us = <400>;
+				exit-latency-us = <1200>;
+				min-residency-us = <2500>;
+			};
+		};
+
+		/* CPU cluster map for DynamIQ */
+		cpu-map {
+			cluster0 {
+				core0 {
+					cpu = <&cpu0>;
+				};
+				core1 {
+					cpu = <&cpu1>;
+				};
+			};
+
+			cluster1 {
+				core0 {
+					cpu = <&cpu2>;
+				};
+				core1 {
+					cpu = <&cpu3>;
+				};
+			};
+		};
+	};
+
+	/* Cache hierarchy */
+	l2_little: l2-cache-little {
+		compatible = "cache";
+		cache-size = <0x80000>; /* 512KB */
+		cache-line-size = <64>;
+		cache-sets = <1024>;
+		cache-level = <2>;
+		next-level-cache = <&l3>;
+	};
+
+	l2_big: l2-cache-big {
+		compatible = "cache";
+		cache-size = <0x100000>; /* 1MB */
+		cache-line-size = <64>;
+		cache-sets = <2048>;
+		cache-level = <2>;
+		next-level-cache = <&l3>;
+	};
+
+	l3: l3-cache {
+		compatible = "cache";
+		cache-size = <0x400000>; /* 4MB */
+		cache-line-size = <64>;
+		cache-sets = <8192>;
+		cache-level = <3>;
+	};
+
+	/* CPU operating points for little cores (A55) */
+	cpu_opp_table_little: opp_table_little {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-800000000 {
+			opp-hz = /bits/ 64 <800000000>;
+			opp-microvolt = <900000>;
+		};
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <950000>;
+		};
+		opp-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+			opp-microvolt = <1000000>;
+		};
+	};
+
+	/* CPU operating points for big cores (A76) */
+	cpu_opp_table_big: opp_table_big {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <950000>;
+		};
+		opp-1400000000 {
+			opp-hz = /bits/ 64 <1400000000>;
+			opp-microvolt = <1000000>;
+		};
+		opp-1800000000 {
+			opp-hz = /bits/ 64 <1800000000>;
+			opp-microvolt = <1100000>;
+		};
+		opp-2000000000 {
+			opp-hz = /bits/ 64 <2000000000>;
+			opp-microvolt = <1200000>;
+		};
+	};
+
+	/* PSCI for CPU control */
+	psci {
+		compatible = "arm,psci-1.0";
+		method = "smc";
+	};
+
+	/* Timer */
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 14 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 11 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 10 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>;
+	};
+
+	/* Interrupt controller */
+	gic: interrupt-controller@fffc1000 {
+		compatible = "arm,gic-400";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		reg = <0x0 0xfffc2000 0x0 0x1000>,
+		      <0x0 0xfffc1000 0x0 0x1000>,
+		      <0x0 0xfffc4000 0x0 0x2000>,
+		      <0x0 0xfffc6000 0x0 0x2000>;
+	};
+
+	/* System manager */
+	sysmgr: sysmgr@ffd08000 {
+		compatible = "altr,sys-mgr", "syscon";
+		reg = <0x0 0xffd08000 0x0 0x4000>;
+	};
+
+	/* Clock manager */
+	clkmgr: clkmgr@ffd10000 {
+		compatible = "intel,agilex5-clkmgr";
+		reg = <0x0 0xffd10000 0x0 0x1000>;
+
+		cpuclk: cpuclk {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <1800000000>;
+		};
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		device_type = "soc";
+		ranges = <0 0 0 0xffffffff>;
+
+		/* UART */
+		uart0: serial@ffc02000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0xffc02000 0x1000>;
+			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			clocks = <&cpuclk>;
+			status = "okay";
+		};
+
+		/* Ethernet */
+		gmac0: ethernet@ff800000 {
+			compatible = "altr,socfpga-stmmac", "snps,dwmac-3.72a", "snps,dwmac";
+			reg = <0xff800000 0x2000>;
+			interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq";
+			mac-address = [00 00 00 00 00 00];
+			clocks = <&cpuclk>;
+			clock-names = "stmmaceth";
+			status = "okay";
+		};
+	};
+
+	/* NUMA memory topology */
+	memory-domains {
+		#address-cells = <2>;
+		#size-cells = <2>;
+
+		numa-node-id = <0>;
+		memory-domain0 {
+			compatible = "numa-memory-map";
+			numa-node-id = <0>;
+			reg = <0x0 0x80000000 0x0 0x40000000>; /* 1GB near little cluster */
+		};
+
+		memory-domain1 {
+			compatible = "numa-memory-map";
+			numa-node-id = <1>;
+			reg = <0x0 0xc0000000 0x0 0x40000000>; /* 1GB near big cluster */
+		};
+	};
+};

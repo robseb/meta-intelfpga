@@ -1,0 +1,469 @@
+/*
+ * Device Tree for Intel Agilex 5 SoC FPGA Emulator (QEMU)
+ * ARM DynamIQ Architecture: 2x Cortex-A55 (efficient) + 2x Cortex-A76 (performance)
+ * Optimized for QEMU virt machine with ARM DynamIQ support
+ * Author: RSyocto GmbH & Co. KG
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Intel Agilex 5 SoC FPGA Emulator";
+	compatible = "intel,agilex5-emulator", "intel,agilex5-socfpga";
+
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	interrupt-parent = <&gic>;
+
+	chosen {
+		bootargs = "console=ttyAMA0,115200 root=/dev/vda rw";
+		stdout-path = "serial0:115200n8";
+	};
+
+	aliases {
+		serial0 = &pl011;
+		ethernet0 = &virtio_net;
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x0 0x40000000 0x0 0x100000000>; /* 4GB for QEMU */
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/* Reserve memory for Jailhouse hypervisor */
+		jailhouse_memory: jailhouse@f0000000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0xf0000000 0x0 0x10000000>; /* 256MB */
+			no-map;
+		};
+
+		/* Reserve memory for Zephyr RTOS */
+		zephyr_memory: zephyr@f8000000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0xf8000000 0x0 0x08000000>; /* 128MB for Zephyr */
+			no-map;
+		};
+	};
+
+	/* ARM DynamIQ CPU topology for QEMU emulation */
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		/* Efficiency cluster - 2x Cortex-A55 cores */
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x0>;
+			enable-method = "psci";
+			operating-points-v2 = <&cpu_opp_table_little>;
+			capacity-dmips-mhz = <600>;
+			dynamic-power-coefficient = <100>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_little>;
+			
+			/* NUMA affinity */
+			numa-node-id = <0>;
+		};
+
+		cpu1: cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a55";
+			reg = <0x1>;
+			enable-method = "psci";
+			operating-points-v2 = <&cpu_opp_table_little>;
+			capacity-dmips-mhz = <600>;
+			dynamic-power-coefficient = <100>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_little>;
+			
+			/* NUMA affinity */
+			numa-node-id = <0>;
+		};
+
+		/* Performance cluster - 2x Cortex-A76 cores */
+		cpu2: cpu@100 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a76";
+			reg = <0x100>;
+			enable-method = "psci";
+			operating-points-v2 = <&cpu_opp_table_big>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <450>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_big>;
+			
+			/* NUMA affinity */
+			numa-node-id = <1>;
+		};
+
+		cpu3: cpu@101 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a76";
+			reg = <0x101>;
+			enable-method = "psci";
+			operating-points-v2 = <&cpu_opp_table_big>;
+			capacity-dmips-mhz = <1024>;
+			dynamic-power-coefficient = <450>;
+			cpu-idle-states = <&CPU_SLEEP &CLUSTER_SLEEP>;
+			next-level-cache = <&l2_big>;
+			
+			/* NUMA affinity */
+			numa-node-id = <1>;
+		};
+
+		/* CPU idle states */
+		idle-states {
+			entry-method = "psci";
+
+			CPU_SLEEP: cpu-sleep {
+				compatible = "arm,idle-state";
+				local-timer-stop;
+				arm,psci-suspend-param = <0x0010000>;
+				entry-latency-us = <300>;
+				exit-latency-us = <1200>;
+				min-residency-us = <2000>;
+				wakeup-latency-us = <1500>;
+			};
+
+			CLUSTER_SLEEP: cluster-sleep {
+				compatible = "arm,idle-state";
+				local-timer-stop;
+				arm,psci-suspend-param = <0x1010000>;
+				entry-latency-us = <400>;
+				exit-latency-us = <1200>;
+				min-residency-us = <2500>;
+				wakeup-latency-us = <1600>;
+			};
+		};
+
+		/* CPU cluster map for ARM DynamIQ */
+		cpu-map {
+			cluster0 {
+				core0 {
+					cpu = <&cpu0>;
+				};
+				core1 {
+					cpu = <&cpu1>;
+				};
+			};
+
+			cluster1 {
+				core0 {
+					cpu = <&cpu2>;
+				};
+				core1 {
+					cpu = <&cpu3>;
+				};
+			};
+		};
+	};
+
+	/* Cache hierarchy */
+	l2_little: l2-cache-little {
+		compatible = "cache";
+		cache-size = <0x80000>; /* 512KB */
+		cache-line-size = <64>;
+		cache-sets = <1024>;
+		cache-level = <2>;
+		cache-unified;
+		next-level-cache = <&l3>;
+	};
+
+	l2_big: l2-cache-big {
+		compatible = "cache";
+		cache-size = <0x100000>; /* 1MB */
+		cache-line-size = <64>;
+		cache-sets = <2048>;
+		cache-level = <2>;
+		cache-unified;
+		next-level-cache = <&l3>;
+	};
+
+	l3: l3-cache {
+		compatible = "cache";
+		cache-size = <0x400000>; /* 4MB */
+		cache-line-size = <64>;
+		cache-sets = <8192>;
+		cache-level = <3>;
+		cache-unified;
+	};
+
+	/* CPU operating points for little cores (A55) */
+	cpu_opp_table_little: opp_table_little {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-800000000 {
+			opp-hz = /bits/ 64 <800000000>;
+			opp-microvolt = <900000>;
+			clock-latency-ns = <300000>;
+		};
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <950000>;
+			clock-latency-ns = <300000>;
+		};
+		opp-1200000000 {
+			opp-hz = /bits/ 64 <1200000000>;
+			opp-microvolt = <1000000>;
+			clock-latency-ns = <300000>;
+		};
+	};
+
+	/* CPU operating points for big cores (A76) */
+	cpu_opp_table_big: opp_table_big {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-1000000000 {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <950000>;
+			clock-latency-ns = <300000>;
+		};
+		opp-1400000000 {
+			opp-hz = /bits/ 64 <1400000000>;
+			opp-microvolt = <1000000>;
+			clock-latency-ns = <300000>;
+		};
+		opp-1800000000 {
+			opp-hz = /bits/ 64 <1800000000>;
+			opp-microvolt = <1100000>;
+			clock-latency-ns = <300000>;
+		};
+		opp-2000000000 {
+			opp-hz = /bits/ 64 <2000000000>;
+			opp-microvolt = <1200000>;
+			clock-latency-ns = <300000>;
+		};
+	};
+
+	/* PSCI for CPU control */
+	psci {
+		compatible = "arm,psci-1.0";
+		method = "smc";
+	};
+
+	/* Timer */
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 14 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 11 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 10 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_LOW)>;
+		always-on;
+	};
+
+	/* PMU for performance monitoring */
+	pmu {
+		compatible = "arm,cortex-a55-pmu", "arm,cortex-a76-pmu";
+		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_RAW(0xff) | IRQ_TYPE_LEVEL_HIGH)>;
+	};
+
+	/* Interrupt controller - QEMU virt machine GICv2 */
+	gic: interrupt-controller@8000000 {
+		compatible = "arm,gic-400";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		reg = <0x0 0x08000000 0x0 0x10000>,
+		      <0x0 0x08010000 0x0 0x10000>;
+	};
+
+	/* QEMU virt machine platform bus */
+	platform@c000000 {
+		compatible = "qemu,platform", "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges = <0 0 0x0c000000 0x02000000>;
+		interrupt-parent = <&gic>;
+	};
+
+	/* PL011 UART for QEMU */
+	pl011: uart@9000000 {
+		compatible = "arm,pl011", "arm,primecell";
+		reg = <0x0 0x09000000 0x0 0x1000>;
+		interrupts = <GIC_SPI 1 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&pclk>, <&pclk>;
+		clock-names = "uartclk", "apb_pclk";
+	};
+
+	/* Virtual RTC */
+	rtc@9010000 {
+		compatible = "arm,pl031", "arm,primecell";
+		reg = <0x0 0x09010000 0x0 0x1000>;
+		interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&pclk>;
+		clock-names = "apb_pclk";
+	};
+
+	/* GPIO controller */
+	gpio@9030000 {
+		compatible = "arm,pl061", "arm,primecell";
+		reg = <0x0 0x09030000 0x0 0x1000>;
+		interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&pclk>;
+		clock-names = "apb_pclk";
+		gpio-controller;
+		#gpio-cells = <2>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+	};
+
+	/* VirtIO devices */
+	virtio_mmio@a000000 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0x0a000000 0x0 0x200>;
+		interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>;
+		dma-coherent;
+	};
+
+	virtio_mmio@a000200 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0x0a000200 0x0 0x200>;
+		interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
+		dma-coherent;
+	};
+
+	virtio_mmio@a000400 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0x0a000400 0x0 0x200>;
+		interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>;
+		dma-coherent;
+	};
+
+	virtio_mmio@a000600 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0x0a000600 0x0 0x200>;
+		interrupts = <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
+		dma-coherent;
+	};
+
+	/* Virtual network device */
+	virtio_net: virtio_net@a000800 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0x0a000800 0x0 0x200>;
+		interrupts = <GIC_SPI 20 IRQ_TYPE_LEVEL_HIGH>;
+		dma-coherent;
+	};
+
+	/* Clocks */
+	pclk: pclk {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <24000000>;
+	};
+
+	/* NUMA memory topology for QEMU */
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0x0 0x80000000>; /* Node 0: 2GB near little cores */
+		numa-node-id = <0>;
+	};
+
+	memory@100000000 {
+		device_type = "memory";
+		reg = <0x1 0x00000000 0x0 0x80000000>; /* Node 1: 2GB near big cores */
+		numa-node-id = <1>;
+	};
+
+	distance-map {
+		compatible = "numa-distance-map-v1";
+		distance-matrix = <0 0 10>,   /* Same node distance */
+			          <0 1 20>,   /* Cross-cluster distance */
+			          <1 0 20>,   /* Cross-cluster distance */
+			          <1 1 10>;   /* Same node distance */
+	};
+
+	/* Energy model for ARM DynamIQ */
+	energy-costs {
+		compatible = "arm,energy-costs";
+
+		CPU_COST_A55: core-cost0 {
+			busy-cost-data = <
+				600   100    /* 600 MHz, 100 mW */
+				800   120    /* 800 MHz, 120 mW */
+				1000  140    /* 1.0 GHz, 140 mW */
+				1200  170    /* 1.2 GHz, 170 mW */
+			>;
+			idle-cost-data = <
+				15  /* ACTIVE */
+				10  /* WFI */
+				5   /* CPU_SLEEP */
+				0   /* CLUSTER_SLEEP */
+			>;
+		};
+
+		CPU_COST_A76: core-cost1 {
+			busy-cost-data = <
+				1000  450   /* 1.0 GHz, 450 mW */
+				1400  650   /* 1.4 GHz, 650 mW */
+				1800  900   /* 1.8 GHz, 900 mW */
+				2000  1200  /* 2.0 GHz, 1200 mW */
+			>;
+			idle-cost-data = <
+				40  /* ACTIVE */
+				30  /* WFI */
+				20  /* CPU_SLEEP */
+				10  /* CLUSTER_SLEEP */
+			>;
+		};
+
+		CLUSTER_COST_A55: cluster-cost0 {
+			busy-cost-data = <
+				600   50
+				800   60
+				1000  70
+				1200  85
+			>;
+			idle-cost-data = <
+				25   /* ACTIVE */
+				15   /* WFI */
+				10   /* CPU_SLEEP */
+				5    /* CLUSTER_SLEEP */
+			>;
+		};
+
+		CLUSTER_COST_A76: cluster-cost1 {
+			busy-cost-data = <
+				1000  200
+				1400  300
+				1800  450
+				2000  600
+			>;
+			idle-cost-data = <
+				80   /* ACTIVE */
+				60   /* WFI */
+				40   /* CPU_SLEEP */
+				20   /* CLUSTER_SLEEP */
+			>;
+		};
+	};
+
+	/* Jailhouse hypervisor cell configuration */
+	jailhouse {
+		compatible = "siemens,jailhouse";
+		memory-region = <&jailhouse_memory>;
+		
+		/* Reserved CPU for Jailhouse/Zephyr */
+		jailhouse-cpu = <&cpu0>; /* Default to A55 core 0 */
+		
+		/* Virtual interfaces for Zephyr */
+		zephyr-memory = <&zephyr_memory>;
+		
+		/* Communication channels */
+		ivshmem {
+			compatible = "jailhouse,ivshmem";
+			reg = <0x0 0xf9000000 0x0 0x1000>;
+			interrupts = <GIC_SPI 100 IRQ_TYPE_EDGE_RISING>;
+		};
+	};
+};

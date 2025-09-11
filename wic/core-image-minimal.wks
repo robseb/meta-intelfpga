@@ -1,0 +1,6 @@
+# short-description: Create disk image for core-image-minimal on Intel SoC FPGA
+# long-description: Creates a partitioned disk image for core-image-minimal
+# running on Intel SoC FPGA devices. Boot files are located in the first vfat partition.
+
+part /boot --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --align 4 --size 32
+part / --source rootfs --ondisk vda --fstype=ext4 --label root --align 4

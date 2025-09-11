@@ -1,0 +1,453 @@
+// Device Tree for Intel Agilex 5 SoC FPGA - QEMU Emulator
+// ARM64 DynamIQ Big.LITTLE Configuration for Virtual Platform
+// Compatible with QEMU virt machine
+
+/dts-v1/;
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/clock/agilex5-clock.h>
+
+/ {
+    compatible = "intel,agilex5-socfpga", "arm,vexpress";
+    model = "Intel Agilex 5 SoC FPGA QEMU Emulator";
+    
+    #address-cells = <2>;
+    #size-cells = <2>;
+
+    interrupt-parent = <&gic>;
+
+    aliases {
+        serial0 = &uart0;
+        ethernet0 = &gmac0;
+    };
+
+    chosen {
+        stdout-path = "serial0:115200n8";
+        bootargs = "console=ttyS0,115200 root=/dev/vda2 rw";
+    };
+
+    // ARM DynamIQ Big.LITTLE CPU Configuration
+    // Emulating Cortex-A76 (big cores) + Cortex-A55 (LITTLE cores)
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu-map {
+            cluster0 {
+                core0 { cpu = <&cpu0>; };
+                core1 { cpu = <&cpu1>; };
+                core2 { cpu = <&cpu2>; };
+                core3 { cpu = <&cpu3>; };
+            };
+            
+            cluster1 {
+                core0 { cpu = <&cpu4>; };
+                core1 { cpu = <&cpu5>; };
+                core2 { cpu = <&cpu6>; };
+                core3 { cpu = <&cpu7>; };
+            };
+        };
+
+        // Big cores (Cortex-A76)
+        cpu0: cpu@0 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a76";
+            reg = <0x0>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <1024>;
+            dynamic-power-coefficient = <120>;
+            next-level-cache = <&l2_0>;
+            cpu-idle-states = <&cpu_sleep_0>;
+            clocks = <&scmi_dvfs 0>;
+            cpu-supply = <&cpu_supply_big>;
+            operating-points-v2 = <&cluster0_opp>;
+        };
+
+        cpu1: cpu@1 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a76";
+            reg = <0x1>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <1024>;
+            dynamic-power-coefficient = <120>;
+            next-level-cache = <&l2_0>;
+            cpu-idle-states = <&cpu_sleep_0>;
+            clocks = <&scmi_dvfs 0>;
+            cpu-supply = <&cpu_supply_big>;
+            operating-points-v2 = <&cluster0_opp>;
+        };
+
+        cpu2: cpu@2 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a76";
+            reg = <0x2>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <1024>;
+            dynamic-power-coefficient = <120>;
+            next-level-cache = <&l2_0>;
+            cpu-idle-states = <&cpu_sleep_0>;
+            clocks = <&scmi_dvfs 0>;
+            cpu-supply = <&cpu_supply_big>;
+            operating-points-v2 = <&cluster0_opp>;
+        };
+
+        cpu3: cpu@3 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a76";
+            reg = <0x3>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <1024>;
+            dynamic-power-coefficient = <120>;
+            next-level-cache = <&l2_0>;
+            cpu-idle-states = <&cpu_sleep_0>;
+            clocks = <&scmi_dvfs 0>;
+            cpu-supply = <&cpu_supply_big>;
+            operating-points-v2 = <&cluster0_opp>;
+        };
+
+        // LITTLE cores (Cortex-A55)
+        cpu4: cpu@100 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a55";
+            reg = <0x100>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <595>;
+            dynamic-power-coefficient = <80>;
+            next-level-cache = <&l2_1>;
+            cpu-idle-states = <&cpu_sleep_1>;
+            clocks = <&scmi_dvfs 1>;
+            cpu-supply = <&cpu_supply_little>;
+            operating-points-v2 = <&cluster1_opp>;
+        };
+
+        cpu5: cpu@101 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a55";
+            reg = <0x101>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <595>;
+            dynamic-power-coefficient = <80>;
+            next-level-cache = <&l2_1>;
+            cpu-idle-states = <&cpu_sleep_1>;
+            clocks = <&scmi_dvfs 1>;
+            cpu-supply = <&cpu_supply_little>;
+            operating-points-v2 = <&cluster1_opp>;
+        };
+
+        cpu6: cpu@102 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a55";
+            reg = <0x102>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <595>;
+            dynamic-power-coefficient = <80>;
+            next-level-cache = <&l2_1>;
+            cpu-idle-states = <&cpu_sleep_1>;
+            clocks = <&scmi_dvfs 1>;
+            cpu-supply = <&cpu_supply_little>;
+            operating-points-v2 = <&cluster1_opp>;
+        };
+
+        cpu7: cpu@103 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a55";
+            reg = <0x103>;
+            enable-method = "psci";
+            capacity-dmips-mhz = <595>;
+            dynamic-power-coefficient = <80>;
+            next-level-cache = <&l2_1>;
+            cpu-idle-states = <&cpu_sleep_1>;
+            clocks = <&scmi_dvfs 1>;
+            cpu-supply = <&cpu_supply_little>;
+            operating-points-v2 = <&cluster1_opp>;
+        };
+
+        l2_0: l2-cache0 {
+            compatible = "cache";
+        };
+
+        l2_1: l2-cache1 {
+            compatible = "cache";
+        };
+
+        idle-states {
+            cpu_sleep_0: cpu-sleep-0 {
+                compatible = "arm,idle-state";
+                arm,psci-suspend-param = <0x0000000>;
+                local-timer-stop;
+                entry-latency-us = <300>;
+                exit-latency-us = <1200>;
+                min-residency-us = <2000>;
+            };
+
+            cpu_sleep_1: cpu-sleep-1 {
+                compatible = "arm,idle-state";
+                arm,psci-suspend-param = <0x0000000>;
+                local-timer-stop;
+                entry-latency-us = <200>;
+                exit-latency-us = <800>;
+                min-residency-us = <1500>;
+            };
+        };
+    };
+
+    // Operating Points for Big Cores
+    cluster0_opp: opp-table0 {
+        compatible = "operating-points-v2";
+        opp-shared;
+
+        opp@400000000 {
+            opp-hz = /bits/ 64 <400000000>;
+            opp-microvolt = <900000>;
+        };
+
+        opp@800000000 {
+            opp-hz = /bits/ 64 <800000000>;
+            opp-microvolt = <950000>;
+        };
+
+        opp@1200000000 {
+            opp-hz = /bits/ 64 <1200000000>;
+            opp-microvolt = <1000000>;
+        };
+
+        opp@1800000000 {
+            opp-hz = /bits/ 64 <1800000000>;
+            opp-microvolt = <1100000>;
+        };
+
+        opp@2400000000 {
+            opp-hz = /bits/ 64 <2400000000>;
+            opp-microvolt = <1200000>;
+        };
+    };
+
+    // Operating Points for LITTLE Cores
+    cluster1_opp: opp-table1 {
+        compatible = "operating-points-v2";
+        opp-shared;
+
+        opp@400000000 {
+            opp-hz = /bits/ 64 <400000000>;
+            opp-microvolt = <850000>;
+        };
+
+        opp@600000000 {
+            opp-hz = /bits/ 64 <600000000>;
+            opp-microvolt = <900000>;
+        };
+
+        opp@800000000 {
+            opp-hz = /bits/ 64 <800000000>;
+            opp-microvolt = <950000>;
+        };
+
+        opp@1200000000 {
+            opp-hz = /bits/ 64 <1200000000>;
+            opp-microvolt = <1000000>;
+        };
+
+        opp@1800000000 {
+            opp-hz = /bits/ 64 <1800000000>;
+            opp-microvolt = <1100000>;
+        };
+    };
+
+    memory@40000000 {
+        device_type = "memory";
+        reg = <0x0 0x40000000 0x0 0x80000000>; // 2GB RAM starting at 1GB
+    };
+
+    psci {
+        compatible = "arm,psci-1.0";
+        method = "hvc";
+    };
+
+    timer {
+        compatible = "arm,armv8-timer";
+        interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+                     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+                     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+                     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+    };
+
+    // QEMU Virtual Platform Bus
+    platform@c000000 {
+        compatible = "qemu,platform", "simple-bus";
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0 0 0x0c000000 0x02000000>;
+        
+        interrupt-parent = <&gic>;
+
+        // VirtIO Block Device
+        virtio@0 {
+            compatible = "virtio,mmio";
+            reg = <0x0a000000 0x200>;
+            interrupts = <GIC_SPI 16 IRQ_TYPE_EDGE_RISING>;
+        };
+
+        // VirtIO Network Device  
+        virtio@200 {
+            compatible = "virtio,mmio";
+            reg = <0x0a000200 0x200>;
+            interrupts = <GIC_SPI 17 IRQ_TYPE_EDGE_RISING>;
+        };
+
+        // VirtIO Console
+        virtio@400 {
+            compatible = "virtio,mmio";
+            reg = <0x0a000400 0x200>;
+            interrupts = <GIC_SPI 18 IRQ_TYPE_EDGE_RISING>;
+        };
+
+        // Additional VirtIO devices
+        virtio@600 {
+            compatible = "virtio,mmio";
+            reg = <0x0a000600 0x200>;
+            interrupts = <GIC_SPI 19 IRQ_TYPE_EDGE_RISING>;
+        };
+    };
+
+    gic: interrupt-controller@8000000 {
+        compatible = "arm,gic-v3";
+        #interrupt-cells = <3>;
+        #address-cells = <2>;
+        #size-cells = <2>;
+        interrupt-controller;
+        reg = <0x0 0x08000000 0x0 0x10000>,     // GICD
+              <0x0 0x080A0000 0x0 0xF60000>;    // GICR
+        interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+    };
+
+    pmu {
+        compatible = "arm,armv8-pmuv3";
+        interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
+    };
+
+    // System Counter
+    syscounter: system-counter {
+        compatible = "arm,armv7-timer-mem";
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+        reg = <0x0 0x2a430000 0x0 0x20000>;
+        clock-frequency = <25000000>;
+        
+        frame@2a830000 {
+            frame-number = <0>;
+            interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+            reg = <0x0 0x2a830000 0x0 0x10000>;
+        };
+    };
+
+    uart0: serial@9000000 {
+        compatible = "arm,pl011", "arm,primecell";
+        reg = <0x0 0x09000000 0x0 0x1000>;
+        interrupts = <GIC_SPI 1 IRQ_TYPE_LEVEL_HIGH>;
+        clocks = <&apb_pclk>, <&apb_pclk>;
+        clock-names = "uartclk", "apb_pclk";
+    };
+
+    rtc@9010000 {
+        compatible = "arm,pl031", "arm,primecell";
+        reg = <0x0 0x09010000 0x0 0x1000>;
+        interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+        clocks = <&apb_pclk>;
+        clock-names = "apb_pclk";
+    };
+
+    flash@0 {
+        compatible = "cfi-flash";
+        reg = <0x0 0x00000000 0x0 0x04000000>,
+              <0x0 0x04000000 0x0 0x04000000>;
+        bank-width = <4>;
+    };
+
+    // Clock generators
+    apb_pclk: apb_pclk {
+        compatible = "fixed-clock";
+        #clock-cells = <0>;
+        clock-frequency = <24000000>;
+        clock-output-names = "clk24mhz";
+    };
+
+    // Power domains and regulators
+    cpu_supply_big: cpu-supply-big {
+        compatible = "regulator-fixed";
+        regulator-name = "cpu-supply-big";
+        regulator-min-microvolt = <900000>;
+        regulator-max-microvolt = <1200000>;
+        regulator-always-on;
+        regulator-boot-on;
+    };
+
+    cpu_supply_little: cpu-supply-little {
+        compatible = "regulator-fixed";
+        regulator-name = "cpu-supply-little";
+        regulator-min-microvolt = <850000>;
+        regulator-max-microvolt = <1100000>;
+        regulator-always-on;
+        regulator-boot-on;
+    };
+
+    // SCMI for CPU DVFS
+    scmi {
+        compatible = "arm,scmi";
+        mboxes = <&mailbox 0 &mailbox 1>;
+        shmem = <&cpu_scp_lpri0 &cpu_scp_lpri1>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        scmi_dvfs: protocol@13 {
+            reg = <0x13>;
+            #clock-cells = <1>;
+        };
+
+        scmi_clk: protocol@14 {
+            reg = <0x14>;
+            #clock-cells = <1>;
+        };
+    };
+
+    // Mailbox for SCMI
+    mailbox: mailbox@2e000000 {
+        compatible = "arm,mhu", "arm,primecell";
+        reg = <0x0 0x2e000000 0x0 0x1000>;
+        interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+        #mbox-cells = <1>;
+        clocks = <&apb_pclk>;
+        clock-names = "apb_pclk";
+    };
+
+    // Shared memory for SCMI
+    sram@2e800000 {
+        compatible = "mmio-sram";
+        reg = <0x0 0x2e800000 0x0 0x80000>;
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges = <0 0x0 0x2e800000 0x80000>;
+
+        cpu_scp_lpri0: scp-shmem@0 {
+            compatible = "arm,scmi-shmem";
+            reg = <0x0 0x80>;
+        };
+
+        cpu_scp_lpri1: scp-shmem@80 {
+            compatible = "arm,scmi-shmem";
+            reg = <0x80 0x80>;
+        };
+    };
+
+    // Network interface (GMAC emulation)  
+    gmac0: ethernet@ff800000 {
+        compatible = "altr,socfpga-stmmac", "snps,dwmac-3.74a", "snps,dwmac";
+        reg = <0x0 0xff800000 0x0 0x2000>;
+        interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+        interrupt-names = "macirq";
+        mac-address = [00 00 00 00 00 00];
+        clocks = <&apb_pclk>;
+        clock-names = "stmmaceth";
+        status = "okay";
+    };
+};

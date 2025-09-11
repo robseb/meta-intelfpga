@@ -1,0 +1,138 @@
+/*
+ * Device Tree for Agilex 7 SoC FPGA Emulation
+ */
+
+/dts-v1/;
+
+/ {
+	model = "Altera Agilex 7 SoC FPGA Emulation";
+	compatible = "altr,socfpga-agilex", "altr,socfpga";
+	
+	#address-cells = <2>;
+	#size-cells = <2>;
+	
+	/* User configurable memory, default to 16GB */
+	memory@0 {
+		device_type = "memory";
+		reg = <0x0 0x0 0x0 0x400000000>; /* 16GB */
+		/* Can be configured up to 32GB for ARMv8-A */
+	};
+	
+	chosen {
+		bootargs = "console=ttyS0,115200";
+		stdout-path = "serial0:115200n8";
+	};
+	
+	psci {
+		compatible = "arm,psci-0.2";
+		method = "smc";
+	};
+	
+	cpus {
+		#address-cells = <2>;
+		#size-cells = <0>;
+		
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a76";
+			device_type = "cpu";
+			reg = <0x0 0x0>;
+			enable-method = "psci";
+			next-level-cache = <&L2_0>;
+		};
+		
+		cpu1: cpu@1 {
+			compatible = "arm,cortex-a76";
+			device_type = "cpu";
+			reg = <0x0 0x1>;
+			enable-method = "psci";
+			next-level-cache = <&L2_0>;
+		};
+		
+		cpu2: cpu@2 {
+			compatible = "arm,cortex-a76";
+			device_type = "cpu";
+			reg = <0x0 0x2>;
+			enable-method = "psci";
+			next-level-cache = <&L2_0>;
+		};
+		
+		cpu3: cpu@3 {
+			compatible = "arm,cortex-a76";
+			device_type = "cpu";
+			reg = <0x0 0x3>;
+			enable-method = "psci";
+			next-level-cache = <&L2_0>;
+		};
+		
+		L2_0: l2-cache0 {
+			compatible = "cache";
+		};
+	};
+	
+	soc {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		compatible = "simple-bus";
+		ranges;
+		
+		/* RTC Driver */
+		rtc@ff200000 {
+			compatible = "arm,pl031", "arm,primecell";
+			reg = <0x0 0xff200000 0x0 0x1000>;
+			interrupts = <0 20 4>;
+			clocks = <&clk24mhz>;
+			clock-names = "apb_pclk";
+		};
+		
+		/* 2x Virtual IO Console (Serial Interface) */
+		serial@ff201000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x0 0xff201000 0x0 0x1000>;
+			interrupts = <0 162 4>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			clock-frequency = <100000000>;
+			status = "okay";
+		};
+		
+		serial@ff202000 {
+			compatible = "snps,dw-apb-uart";
+			reg = <0x0 0xff202000 0x0 0x1000>;
+			interrupts = <0 163 4>;
+			reg-shift = <2>;
+			reg-io-width = <4>;
+			clock-frequency = <100000000>;
+			status = "okay";
+		};
+		
+		/* 1x Virtual IO Ethernet device */
+		ethernet@ff700000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0xff700000 0x0 0x1000>;
+			interrupts = <0 40 4>;
+			status = "okay";
+		};
+		
+		/* 1x Virtual IO USB Host interface */
+		usb@ff800000 {
+			compatible = "virtio,mmio";
+			reg = <0x0 0xff800000 0x0 0x1000>;
+			interrupts = <0 42 4>;
+			status = "okay";
+		};
+	};
+	
+	clocks {
+		clk24mhz: clk24mhz {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <24000000>;
+		};
+	};
+	
+	virtio_block@0 {
+		compatible = "virtio,mmio";
+		reg = <0x0 0xff900000 0x0 0x200>;
+		interrupts = <0 48 4>;
+	};
+};

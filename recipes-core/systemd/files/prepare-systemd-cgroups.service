@@ -1,0 +1,39 @@
+[Unit]
+Description=Mount and prepare cgroups v2 for systemd
+DefaultDependencies=no
+Before=systemd-journald.service systemd-udevd.service basic.target
+After=local-fs.target
+Wants=local-fs.target
+ConditionPathExists=/proc/cgroups
+ConditionKernelCommandLine=systemd.unified_cgroup_hierarchy
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# Ensure /sys/fs/cgroup directory exists
+ExecStart=/bin/mkdir -p /sys/fs/cgroup
+# Unmount any existing cgroups first
+ExecStart=-/bin/umount /sys/fs/cgroup
+# Mount cgroups v2 filesystem
+ExecStart=/bin/mount -t cgroup2 cgroup2 /sys/fs/cgroup
+# Set proper permissions
+ExecStart=/bin/chmod 755 /sys/fs/cgroup
+# Ensure systemd can write to cgroup files
+ExecStart=/bin/chown root:root /sys/fs/cgroup
+# Wait a moment for mount to settle
+ExecStart=/bin/sleep 1
+# Enable available controllers in cgroup.subtree_control
+ExecStart=/bin/sh -c 'if [ -w /sys/fs/cgroup/cgroup.subtree_control ]; then echo "+cpu +memory +pids" > /sys/fs/cgroup/cgroup.subtree_control; fi'
+# Create systemd expected directory structure
+ExecStart=/bin/mkdir -p /sys/fs/cgroup/system.slice
+ExecStart=/bin/mkdir -p /sys/fs/cgroup/user.slice
+ExecStart=/bin/mkdir -p /sys/fs/cgroup/init.scope
+ExecStart=/bin/mkdir -p /sys/fs/cgroup/machine.slice
+# Make directories writable by systemd
+ExecStart=/bin/chmod 755 /sys/fs/cgroup/system.slice /sys/fs/cgroup/user.slice /sys/fs/cgroup/init.scope /sys/fs/cgroup/machine.slice
+TimeoutStartSec=60
+StandardOutput=journal+console
+StandardError=journal+console
+
+[Install]
+WantedBy=sysinit.target

@@ -1,0 +1,20 @@
+From: yocto-assistant <yocto@example.com>
+Date: $(date)
+Subject: [PATCH] altvipfb2: Remove deprecated FBINFO_FLAG_DEFAULT
+
+FBINFO_FLAG_DEFAULT was removed in Linux 5.19+ as the flag's functionality
+became the default behavior. This patch removes the assignment to fix
+compilation errors with kernel 6.7.
+
+Signed-off-by: yocto-assistant <yocto@example.com>
+
+--- a/drivers/video/fbdev/altvipfb2.c
++++ b/drivers/video/fbdev/altvipfb2.c
+@@ -124,8 +124,6 @@ static void altvipfb2_setup_fb_info(struct fb_info *info)
+ 	info->var.blue.msb_right = 0;
+ 	info->pseudo_palette = fbpriv->pseudo_palette;
+ 
+-	info->flags = FBINFO_FLAG_DEFAULT;
+ }
+ 
+ int altvipfb2_probe(struct device *dev, void __iomem *base)

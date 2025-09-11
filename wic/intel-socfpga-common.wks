@@ -1,0 +1,7 @@
+# short-description: Create disk image for Intel SoC FPGA devices
+# long-description: Creates a partitioned disk image for Intel SoC FPGA devices.
+# This is a generic kickstart file suitable for all Intel SoC FPGA machines
+# including emulators. Boot files are located in the first vfat partition.
+
+part /boot --source bootimg-partition --ondisk vda --fstype=vfat --label boot --active --align 4 --size 32
+part / --source rootfs --ondisk vda --fstype=ext4 --label root --align 4

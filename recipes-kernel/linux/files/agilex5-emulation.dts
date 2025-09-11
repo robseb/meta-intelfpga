@@ -1,0 +1,127 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree for Agilex5 Emulator on QEMU virt machine (ARM64)
+ * Compatible with qemu-system-aarch64 -machine virt
+ */
+
+/dts-v1/;
+
+/ {
+	model = "Intel Agilex5 Emulator (QEMU virt)";
+	compatible = "linux,dummy-virt", "intel,agilex5-emulator";
+	interrupt-parent = <&gic>;
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	chosen {
+		bootargs = "console=ttyAMA0,115200 earlycon=pl011,0x9000000 debug loglevel=8";
+		stdout-path = &uart0;
+	};
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x0 0x40000000 0x0 0x80000000>; // 2GB RAM
+	};
+
+	cpus {
+		#address-cells = <2>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a72";
+			reg = <0x0 0x0>;
+			enable-method = "psci";
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a72";
+			reg = <0x0 0x1>;
+			enable-method = "psci";
+		};
+
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a72";
+			reg = <0x0 0x2>;
+			enable-method = "psci";
+		};
+
+		cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a72";
+			reg = <0x0 0x3>;
+			enable-method = "psci";
+		};
+	};
+
+	psci {
+		compatible = "arm,psci-0.2", "arm,psci";
+		method = "hvc";
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <1 13 0x108>, // Physical Secure
+			     <1 14 0x108>, // Physical Non-Secure
+			     <1 11 0x108>, // Virtual
+			     <1 10 0x108>; // Hypervisor
+	};
+
+	gic: interrupt-controller@8000000 {
+		compatible = "arm,gic-400";
+		interrupt-controller;
+		#interrupt-cells = <3>;
+		reg = <0x0 0x08000000 0x0 0x10000>,
+		      <0x0 0x08010000 0x0 0x10000>,
+		      <0x0 0x08030000 0x0 0x10000>,
+		      <0x0 0x08040000 0x0 0x10000>;
+		interrupts = <1 9 0xf04>;
+	};
+
+	uart0: uart@9000000 {
+		compatible = "arm,pl011", "arm,primecell";
+		reg = <0x0 0x09000000 0x0 0x1000>;
+		interrupts = <0 1 4>;
+		clock-names = "uartclk", "apb_pclk";
+		clocks = <&uart_clk>, <&uart_clk>;
+	};
+
+	uart_clk: uart_clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+		clock-output-names = "uartclk";
+	};
+
+	rtc@9010000 {
+		compatible = "arm,pl031", "arm,primecell";
+		reg = <0x0 0x09010000 0x0 0x1000>;
+		interrupts = <0 2 4>;
+		clock-names = "apb_pclk";
+		clocks = <&uart_clk>;
+	};
+
+	pcie@10000000 {
+		compatible = "pci-host-ecam-generic";
+		device_type = "pci";
+		reg = <0x0 0x3f000000 0x0 0x1000000>;
+		bus-range = <0x00 0xff>;
+		linux,pci-domain = <0>;
+		#address-cells = <3>;
+		#size-cells = <2>;
+		ranges = <0x01000000 0x00 0x00000000 0x0 0x3eff0000 0x00 0x00010000>,
+			 <0x02000000 0x00 0x10000000 0x0 0x10000000 0x00 0x2eff0000>;
+		interrupt-map-mask = <0x1800 0x0 0x0 0x7>;
+		interrupt-map = <0x0000 0x0 0x0 0x1 &gic 0x0 0x3 0x4>,
+				<0x0000 0x0 0x0 0x2 &gic 0x0 0x4 0x4>,
+				<0x0000 0x0 0x0 0x3 &gic 0x0 0x5 0x4>,
+				<0x0000 0x0 0x0 0x4 &gic 0x0 0x6 0x4>;
+		dma-coherent;
+	};
+};

@@ -1,11 +1,10 @@
-![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Intel+SoC-FPGA&color=blue)
-![GitHub](https://img.shields.io/static/v1?label=Yocto+Project+Releases&messagescarthgap&color=darkgreen)
+![GitHub](https://img.shields.io/static/v1?label=Plattform&message=Altera+SoC-FPGA&color=blue)
 ![GitHub](https://img.shields.io/github/license/robseb/meta-intelfpga)
 <br>
 
 # BSP meta-layer for Intel (*ALTERA*) SoC-FPGAs (*SoCFPGAs*) and the *Yocto Project* 
 
-**With this layer the board support package (BSP) for *ARM* based *Intel (ALTERA) SoC-FPGAs (SoCFPGA)* is added to the *Yocto Project*.** <br>
+**With this layer the board support package (BSP) for *ARM* based *Altera (Intel) SoC-FPGAs (SoCFPGA)* is added to the *Yocto Project*.** <br>
 **It can bring with the *rstools* useful tools to interact with the FPGA fabric (e.g. Changing the FPGA configuration or accessing all ARM AXI Bride interfaces).** <br>
 **In addition, is the ARM Development Studio (*DS-5*) *Streamline* Server [*gator*](https://github.com/ARM-software/gator) included.**
 
@@ -23,8 +22,6 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 
 **More *rstools* examples are available [here inside my *rsyocto* guide](https://github.com/robseb/rsyocto/blob/rsyocto-1.042/doc/guides/2_FPGA_HARDIP.md#interacting-with-fpga-ip).**
 
-**Note:** Right now only are the *rstools* for the Intel *Cyclone V*- and Intel *Arria 10 SX*- SoC-FPGA available. 
-
 
 ## Supported Device families
 
@@ -32,17 +29,56 @@ For instance with a single Linux shell command (`FPGA-writeConfig`) of the *rsto
 |:--|:--|:--|
 | Intel (*ALTERA*) **Cylone V** SoC-FPGA | *ARMv7A* | *MACHINE ="cyclone5"* |
 | Intel (*ALTERA*) **Arria 10** SoC-FPGA | *ARMv7A* | *MACHINE ="arria10"* |
+| Intel (*ALTERA*) **Stratix 10** SoC-FPGA | *ARMv8A* | *MACHINE ="stratix10"* |
+| Intel (*ALTERA*) **Agilex 3** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex3"* |
+| Intel (*ALTERA*) **Agilex 5** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex5"* |
+| Intel (*ALTERA*) **Agilex 7** SoC-FPGA | *ARMv8A* | *MACHINE ="agilex7"* |
 <br>
+
+## Supported Yocto Project Releases 
+
+Automated CI/CD test system ensures compatibility with following *Yocto Project* releases:
+
+| **Release Version** | **Release Name** | **Integration Tested**|
+|:--|:--|:--|
+| `5.2` | `walnascar` | 05 SEP 2025 |
+| `5.1` | `styhead` | 05 SEP 2025 |
+| `5.0` | `scarthgap` | 05 SEP 2025 |
+| `4.3` | `nanbield` | 05 SEP 2025 |
+| `4.2` | `mickledore` | 05 SEP 2025 |
+| `4.1` | `langdale` | 05 SEP 2025 |
+| `4.0` | `kirkstone` | 05 SEP 2025 |
+
+
 
 ## Linux Kernel Types
 
-| **Linux Version Name** | **Version Type** | **Supported Linux Kernel Versions**  |
-|:--|:--|:--|
-| *"linux-altera"* | **Regular Linux Version** |`5.8`, `6.0`, `6.1`, `6.2`, `6.5`, `6.6`, `6.7` |
-| *"linux-altera-lts"* | **Long term stable Linux Version (LTS)** | `5.4.54`,`5.10.60`,`5.10.100`, `5.15.70`, `5.15.80`, `5.15.90`, `5.15.100`, `6.1.20`, `6.1.38`, `6.1.55`, `6.1.68`|  
+| **Kernel Name** | **Upstream Kernel Version**  | **Implementation** | **Is LTS**  | **Integration Tested**|
+|:--|:--|:--|:--|:--|
+| linux-altera-lts | `6.12` | PREFERRED_VERSION_linux-altera-lts = "6.12%" | Yes | 05 SEP 2025 |
+| linux-altera | `6.7` | PREFERRED_VERSION_linux-altera = "6.7%" | No | 05 SEP 2025 |
+| linux-altera, linux-altera-lts | `6.6` | PREFERRED_VERSION_linux-altera-lts = "6.6%" | Yes | 05 SEP 2025 |
+| linux-altera | `6.5` | PREFERRED_VERSION_linux-altera = "6.5%" | No | 05 SEP 2025 |
+| linux-altera | `6.2` | PREFERRED_VERSION_linux-altera = "6.2%" | No | 05 SEP 2025 |
+| linux-altera, linux-altera-lts | `6.1` | PREFERRED_VERSION_linux-altera-lts = "6.1%" | Yes | 05 SEP 2025 |
+| linux-altera | `6.0` | PREFERRED_VERSION_linux-altera = "6.0%" | No | 05 SEP 2025 |
+| linux-altera | `5.19` | PREFERRED_VERSION_linux-altera = "5.19%" | No | 05 SEP 2025 |
+| linux-altera | `5.18` | PREFERRED_VERSION_linux-altera = "5.18%" | No | 05 SEP 2025 |
+| linux-altera | `5.17` | PREFERRED_VERSION_linux-altera = "5.17%" | No | 05 SEP 2025 |
+| linux-altera | `5.16` | PREFERRED_VERSION_linux-altera = "5.16%" | No | 05 SEP 2025 |
+| linux-altera, linux-altera-lts | `5.15` | PREFERRED_VERSION_linux-altera-lts = "5.15%" | Yes | 05 SEP 2025 |
+| linux-altera | `5.14` | PREFERRED_VERSION_linux-altera = "5.14%" | No | 05 SEP 2025 |
+| linux-altera | `5.13` | PREFERRED_VERSION_linux-altera = "5.13%" | No | 05 SEP 2025 |
+| linux-altera | `5.12` | PREFERRED_VERSION_linux-altera = "5.12%" | No | 05 SEP 2025 |
+| linux-altera | `5.11` | PREFERRED_VERSION_linux-altera = "5.11%" | No | 05 SEP 2025 |
+| linux-altera-lts | `5.10` | PREFERRED_VERSION_linux-altera-lts = "5.10%" | Yes | 05 SEP 2025 |
+| linux-altera | `5.9` | PREFERRED_VERSION_linux-altera = "5.9%" | No | 05 SEP 2025 |
+| linux-altera | `5.8` | PREFERRED_VERSION_linux-altera = "5.8%" | No | 05 SEP 2025 |
+| linux-altera | `5.7` | PREFERRED_VERSION_linux-altera = "5.7%" | No | 05 SEP 2025 |
+| linux-altera | `5.6` | PREFERRED_VERSION_linux-altera = "5.6%" | No | 05 SEP 2025 |
+| linux-altera | `5.5` | PREFERRED_VERSION_linux-altera = "5.5%" | No | 05 SEP 2025 |
+| linux-altera-lts | `5.4` | PREFERRED_VERSION_linux-altera-lts = "5.4%" | Yes | 05 SEP 2025 |
 
-**The Linux Kernel source code is available on the official [Intel (*ALTERA*) repository](https://github.com/altera-opensource/linux-socfpga)**. 
-<br>
 
 ## List of *rstools* to interact with the FPGA-fabric
 
@@ -87,7 +123,7 @@ The source code of the *rstools* is available here: [For the Intel Cyclone V SoC
 	* **Ubuntu 24.04 LTS**
 
 * **Yocto Project Releases**
-	* **scarthgap** (*5.0*)
+	* ****kirkstone**, **langdale**, **mickledore**, **nanbield**, **scarthgap**, **styhead**, **walnascar**** (*5.0*)
 
 **Note:** Select the dedicated branch for the Yocto Project Release you want to use in this repository.
 

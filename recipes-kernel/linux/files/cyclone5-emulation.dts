@@ -1,0 +1,94 @@
+/dts-v1/;
+
+/ {
+    model = "QEMU ARM Virt Machine (for Cyclone V Emulation)";
+    compatible = "linux,dummy-virt";
+
+    #address-cells = <2>;
+    #size-cells = <2>;
+
+    aliases {
+        serial0 = &uart0;
+    };
+
+    chosen {
+        bootargs = "console=ttyAMA0,115200 earlycon=pl011,0x9000000";
+        stdout-path = "serial0:115200n8";
+    };
+
+    memory@40000000 {
+        device_type = "memory";
+        reg = <0x0 0x40000000 0x0 0x40000000>; /* 1GB */
+    };
+
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        cpu@0 {
+            device_type = "cpu";
+            compatible = "arm,cortex-a15";
+            reg = <0>;
+        };
+    };
+
+    timer {
+        compatible = "arm,armv7-timer";
+        interrupts = <1 13 0xf08>;
+        always-on;
+    };
+
+    intc: interrupt-controller@8000000 {
+        compatible = "arm,gic-400";
+        #interrupt-cells = <3>;
+        interrupt-controller;
+        reg = <0x0 0x08000000 0 0x10000>,
+              <0x0 0x08010000 0 0x10000>;
+    };
+
+    uart0: serial@9000000 {
+        compatible = "arm,pl011", "arm,primecell";
+        reg = <0x0 0x9000000 0x0 0x1000>;
+        interrupts = <0 1 4>;
+        clock-names = "uartclk", "apb_pclk";
+        clocks = <&clk24mhz>, <&clk24mhz>;
+        status = "okay";
+    };
+
+    clocks {
+        clk24mhz: clk24mhz {
+            #clock-cells = <0>;
+            compatible = "fixed-clock";
+            clock-frequency = <24000000>;
+        };
+    };
+
+    virtio_mmio@a000000 {
+        compatible = "virtio,mmio";
+        reg = <0x0 0xa000000 0x0 0x200>;
+        interrupts = <0 16 4>;
+    };
+
+    virtio_mmio@a000200 {
+        compatible = "virtio,mmio";
+        reg = <0x0 0xa000200 0x0 0x200>;
+        interrupts = <0 17 4>;
+    };
+
+    virtio_mmio@a000400 {
+        compatible = "virtio,mmio";
+        reg = <0x0 0xa000400 0x0 0x200>;
+        interrupts = <0 18 4>;
+    };
+
+    virtio_mmio@a000600 {
+        compatible = "virtio,mmio";
+        reg = <0x0 0xa000600 0x0 0x200>;
+        interrupts = <0 19 4>;
+    };
+
+    virtio_mmio@a000800 {
+        compatible = "virtio,mmio";
+        reg = <0x0 0xa000800 0x0 0x200>;
+        interrupts = <0 20 4>;
+    };
+};

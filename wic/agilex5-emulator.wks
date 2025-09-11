@@ -1,0 +1,6 @@
+# short-description: Create disk image for Agilex 5 SoC FPGA emulator
+# long-description: Creates a partitioned disk image for the Agilex 5 SoC FPGA emulator.
+# This is optimized for ARM64 QEMU emulation with virtio devices.
+# No separate boot partition needed for QEMU - kernel loaded directly.
+
+part / --source rootfs --ondisk vda --fstype=ext4 --label root --align 4

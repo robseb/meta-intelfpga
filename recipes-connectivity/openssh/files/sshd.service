@@ -1,0 +1,20 @@
+[Unit]
+Description=OpenSSH server daemon
+Wants=sshdgenkeys.service
+After=sshdgenkeys.service network.target
+
+[Service]
+Type=notify
+Environment="SSHD_OPTS="
+EnvironmentFile=-/etc/default/ssh
+ExecStartPre=/bin/mkdir -p /var/run/sshd
+ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+# Disable cgroup delegation to avoid systemd cgroup issues
+Delegate=no
+
+[Install]
+WantedBy=multi-user.target
